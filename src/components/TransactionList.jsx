@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { getTransactions, getCategories } from '../services/localStorageService';
 import './TransactionList.css'; // Import the new CSS file
 
-function TransactionList({ onEditTransaction, onDeleteTransaction }) {
+// Accept the handlers as props now
+function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey }) {
   const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,8 @@ function TransactionList({ onEditTransaction, onDeleteTransaction }) {
       setLoading(false);
     };
     loadData();
-  }, []);
+    // Reload data when appRefreshKey changes (e.g., after add/edit/delete)
+  }, [appRefreshKey]); 
 
   // Effect to reset category filter if the selected category is not valid for the current type filter
   useEffect(() => {
@@ -59,13 +61,15 @@ function TransactionList({ onEditTransaction, onDeleteTransaction }) {
     return <p className="loading-message">Loading transactions...</p>;
   }
 
-  if (transactions.length === 0) {
-    return <p className="no-transactions-message">No transactions yet. Add one using the form above!</p>;
+  // Use filteredTransactions count for the empty message check
+  if (transactions.length === 0) { 
+    return <p className="no-transactions-message">No transactions recorded yet.</p>;
   }
 
   return (
     <div className="transaction-list-container">
-      <h3>Transaction History</h3>
+      {/* Moved title out, will be handled by the parent page */}
+      {/* <h3>Transaction History</h3> */}
       
       {/* Filter Controls */} 
       <div className="transaction-filters">
@@ -94,54 +98,86 @@ function TransactionList({ onEditTransaction, onDeleteTransaction }) {
         <p className="no-transactions-message">No transactions match your current filters.</p>
       )}
 
-      <ul className="transaction-list">
-        {filteredTransactions.map(transaction => {
-          const categoryDetails = getCategoryDetails(transaction.categoryId);
-          return (
-            <li key={transaction.id} className={`transaction-item ${transaction.type}`}>
-              <div className="transaction-info">
-                <div>
-                  <strong>Date:</strong> <span className="date">{transaction.date}</span>
-                </div>
-                <div>
-                  <strong>Category:</strong> 
-                  {categoryDetails.iconEmoji && <span className="category-emoji">{categoryDetails.iconEmoji} </span>}
-                  <span className="category-name">{categoryDetails.name}</span>
-                </div>
-                {transaction.note && (
-                  <div className="note">
-                    <strong>Note:</strong> <em>{transaction.note}</em>
-                  </div>
-                )}
-              </div>
-              <div className="transaction-amount-type">
-                <span className={`amount ${transaction.type}`}>
-                  {transaction.type === 'income' ? '+' : '-'}${Math.abs(transaction.amount).toFixed(2)}
-                </span>
-                <span className="type">({transaction.type})</span>
-              </div>
-              <div className="transaction-actions">
-                <button 
-                  onClick={() => onEditTransaction(transaction)} 
-                  className="btn btn-secondary btn-sm"
-                >
-                  Edit
-                </button>
-                <button 
-                  onClick={() => {
+      {/* Use filteredTransactions here */}
+      {filteredTransactions.length > 0 && ( 
+        <ul className="transaction-list">
+          {filteredTransactions.map(transaction => {
+            const categoryDetails = getCategoryDetails(transaction.categoryId);
+            
+            // Date Formatting
+            const formatDate = (dateString) => {
+              if (!dateString) return '';
+              const date = new Date(dateString);
+              // Adjust for potential timezone issues by using UTC methods if necessary, 
+              // but for simple MM/DD, local time should be fine unless crossing midnight boundaries.
+              // Add 1 to month because getMonth() is 0-indexed
+              const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+              const day = date.getDate().toString().padStart(2, '0');
+              return `${month}/${day}`;
+            };
+
+            const handleEdit = () => {
+                if (onEditTransaction) {
+                    onEditTransaction(transaction);
+                } else {
+                    console.warn("onEditTransaction handler not provided to TransactionList");
+                }
+            };
+            const handleDelete = () => {
+                if (onDeleteTransaction) {
                     if (window.confirm('Are you sure you want to delete this transaction?')) {
-                      onDeleteTransaction(transaction.id);
+                        onDeleteTransaction(transaction.id);
                     }
-                  }} 
-                  className="btn btn-danger btn-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+                } else {
+                     console.warn("onDeleteTransaction handler not provided to TransactionList");
+                }
+            };
+            return (
+              <li key={transaction.id} className={`transaction-item ${transaction.type}`}>
+                {/* Top Row: Date and Emoji */}
+                <div className="transaction-primary-info">
+                   {categoryDetails.iconEmoji && <span className="category-emoji">{categoryDetails.iconEmoji}</span>}
+                   <span className="date">{formatDate(transaction.date)}</span>
+                </div>
+
+                {/* Middle Row: Amount, Type, and Note */}
+                <div className="transaction-amount-details">
+                  <div className="transaction-amount-type">
+                    <span className={`transaction-amount ${transaction.type === 'income' ? 'income' : 'expense'}`}>
+                      {transaction.type === 'expense' ? '-' : '+'}{Math.abs(transaction.amount).toFixed(2)}
+                      <span className="currency-suffix"> TND</span>
+                    </span>
+                    <span className="type">({transaction.type})</span>
+                  </div>
+                  {transaction.note && (
+                    <div className="note">
+                      <em>{transaction.note}</em> {/* Removed "Note:" label */}
+                    </div>
+                  )}
+                </div>
+
+                {/* Bottom Row: Actions */}
+                <div className="transaction-actions">
+                  <button 
+                    onClick={handleEdit} // Use the handler
+                    className="btn btn-secondary btn-sm"
+                    disabled={!onEditTransaction} // Disable if handler missing
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    onClick={handleDelete} // Use the handler
+                    className="btn btn-danger btn-sm"
+                    disabled={!onDeleteTransaction} // Disable if handler missing
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

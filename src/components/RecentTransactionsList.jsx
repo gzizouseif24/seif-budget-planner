@@ -62,9 +62,11 @@ function RecentTransactionsList({ numberOfTransactionsToShow = 3, onEditTransact
                   <span className="transaction-date">{formatDate(transaction.date)}</span>
                 </div>
               </div>
-              <div className={`transaction-amount ${transaction.type === 'income' ? 'income-amount' : 'expense-amount'}`}>
-                {transaction.type === 'expense' ? '−' : '+'}
-                ${Math.abs(transaction.amount).toFixed(2)}
+              <div className="transaction-amount">
+                <span className={`transaction-amount ${transaction.type}`}>
+                  {transaction.type === 'income' ? '+' : '-'}{Math.abs(transaction.amount).toFixed(2)}
+                  <span className="currency-suffix"> TND</span>
+                </span>
               </div>
               <button onClick={handleDelete} className="delete-transaction-btn" aria-label="Delete transaction">
                 &times;

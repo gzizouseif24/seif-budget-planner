@@ -142,8 +142,8 @@ function TransactionForm({ onTransactionSubmit, existingTransaction }) {
         <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} required />
       </div>
 
-      <div>
-        <label htmlFor="amount">Amount:</label>
+      <div className="form-group amount-group">
+        <label htmlFor="amount">Amount <span className="currency-suffix">(TND)</span></label>
         <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" step="0.01" required />
       </div>
 

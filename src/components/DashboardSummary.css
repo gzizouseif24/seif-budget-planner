@@ -2,68 +2,114 @@
 
 .dashboard-summary-card { /* Changed from .dashboard-summary-container */
   background-color: var(--container-background); /* Dark card background */
-  padding: 1.5rem;
+  padding: 1rem; /* Reduced card padding */
   border-radius: var(--border-radius);
-  margin: 1.5rem 0; /* Margin top/bottom, no horizontal auto margin as it fills container space */
+  margin: 1rem 0; /* Reduced margin */
   color: var(--text-color-primary);
   box-shadow: var(--card-shadow);
-  text-align: center; /* Center align title and content within card */
+  /* text-align: center; Keep centering for title */
 }
 
-.dashboard-summary-card h3 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem; /* Adjusted title size from design */
-  font-weight: 500;
-  color: var(--text-color-primary);
-}
+/* Removed h3 title style as h3 is commented out */
 
-.summary-values-container {
+/* --- NEW: Container for the entire new layout --- */
+.summary-layout-container {
   display: flex;
-  justify-content: space-around; /* Space out Income and Expenses */
-  align-items: center; /* Align items if they have different heights */
-  gap: 1rem; /* Gap between income and expense blocks */
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  gap: 0.1rem; /* Very small gap */
 }
 
-.summary-value-item {
+/* --- NEW: Styling for the top row (Expenses Left, Income Right) --- */
+.summary-top-row {
   display: flex;
-  flex-direction: column; /* Stack label and amount */
-  align-items: center; /* Center label and amount */
-  padding: 1rem; /* Padding within each item block */
-  min-width: 120px; /* Ensure items have some width */
+  justify-content: space-between; /* Push items to edges */
+  width: 100%; /* Take full width */
+  margin-bottom: 0.1rem; /* Very small margin below top row */
+  padding: 0 0.5rem; /* Reduced padding */
+  box-sizing: border-box;
 }
 
-.summary-label {
-  display: block;
-  font-size: 0.8rem; /* Smaller label text */
+/* --- NEW: Common styling for small detail items --- */
+.summary-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center text within item */
+}
+
+.summary-expenses-small {
+  align-items: flex-start; /* Align expenses text left */
+  text-align: left;
+}
+
+.summary-income-small {
+  align-items: flex-end; /* Align income text right */
+  text-align: right;
+}
+
+.summary-label-small {
+  font-size: 0.65rem; /* Further reduced label size */
   color: var(--text-color-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0; /* Remove margin below small label */
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
 }
 
-.summary-value-item .amount {
-  font-size: 2rem; /* Larger amount text as per design */
-  font-weight: 700; /* Bold amount */
+.amount-small {
+  font-size: 1rem; /* Reduced small amount size */
+  font-weight: 600;
   line-height: 1.2;
 }
 
-.income-amount {
+/* --- NEW: Styling for the large remaining balance --- */
+.summary-remaining-balance {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center label and amount */
+  margin-top: 0.1rem; /* Very small margin above balance */
+}
+
+.summary-label-large {
+  font-size: 0.7rem; /* Reduced large label size */
+  color: var(--text-color-secondary);
+  margin-bottom: 0; /* Remove margin below large label */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.amount-large {
+  font-size: 2.2rem; /* Significantly reduced large amount size */
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.positive-balance {
+  color: var(--accent-color-green); /* Use green for positive or zero balance */
+}
+
+.negative-balance {
+  color: var(--accent-color-red); /* Use red for negative balance */
+}
+
+/* --- Existing styles for shared amount colors --- */
+.income-amount { 
+  /* Reuse if needed, or specific classes like amount-small/amount-large handle color */
   color: var(--accent-color-green);
 }
 
 .expense-amount {
+  /* Reuse if needed */
   color: var(--accent-color-red);
 }
 
 /* Remove old styles no longer used */
 /*
-.summary-items-wrapper { ... }
-.summary-item { ... }
-.summary-item strong { ... }
-.summary-item p { ... } // Replaced by .amount styling
+.summary-values-container { ... }
+.summary-value-item { ... }
+.summary-label { ... }
+.summary-value-item .amount { ... } // Replaced by .amount styling
 .income-item { ... }
 .expenses-item { ... }
 .balance-item { ... }

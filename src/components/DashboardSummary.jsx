@@ -36,17 +36,38 @@ function DashboardSummary({ appRefreshKey, currentMonthPeriod }) {
     return <p className="loading-message">Loading summary...</p>;
   }
 
+  const remainingBalance = summaryData.totalIncome - summaryData.totalExpenses;
+  const balanceColorClass = remainingBalance >= 0 ? 'positive-balance' : 'negative-balance';
+
   return (
     <div className="dashboard-summary-card"> {/* Changed class for new design */}
-      <h3>Dashboard Summary (for {currentMonthPeriod})</h3>
-      <div className="summary-values-container">
-        <div className="summary-value-item income-value-item">
-          <span className="summary-label">TOTAL INCOME</span>
-          <p className="amount income-amount">${summaryData.totalIncome.toFixed(2)}</p>
+      {/*<h3>Dashboard Summary (for {currentMonthPeriod})</h3>*/}
+      
+      {/* New Layout Starts Here */}
+      <div className="summary-layout-container">
+        <div className="summary-top-row">
+          <div className="summary-detail-item summary-expenses-small">
+            <span className="summary-label-small">TOTAL EXPENSES</span>
+            <p className="amount-small expense-amount">
+              {summaryData.totalExpenses.toFixed(2)}
+              <span className="currency-suffix"> TND</span>
+            </p>
+          </div>
+          <div className="summary-detail-item summary-income-small">
+            <span className="summary-label-small">TOTAL INCOME</span>
+            <p className="amount-small income-amount">
+              {summaryData.totalIncome.toFixed(2)}
+              <span className="currency-suffix"> TND</span>
+            </p>
+          </div>
         </div>
-        <div className="summary-value-item expense-value-item">
-          <span className="summary-label">TOTAL EXPENSES</span>
-          <p className="amount expense-amount">${summaryData.totalExpenses.toFixed(2)}</p>
+
+        <div className="summary-remaining-balance">
+          <span className="summary-label-large">REMAINING MONEY</span>
+          <p className={`amount-large ${balanceColorClass}`}>
+            {remainingBalance.toFixed(2)}
+            <span className="currency-suffix"> TND</span>
+          </p>
         </div>
       </div>
     </div>

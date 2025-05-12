@@ -32,15 +32,21 @@
   transition: color 0.3s ease;
 }
 
-.nav-item span:first-child {
-  /* Placeholder for icon */
-  margin-bottom: 4px;
-  font-size: 1.2em; /* Adjust if using actual icons */
+/* --- NEW styles for actual icons and labels --- */
+.nav-icon {
+  font-size: 1.6em; /* Adjust size as needed */
+  margin-bottom: 2px; /* Space between icon and label */
+}
+
+.nav-label {
+  font-size: 0.75em; /* Adjust label size */
+  display: block; /* Ensure label takes its own space */
 }
 
 .nav-item.active {
-  color: #4CAF50; /* Placeholder active link color - use your accent color */
-  font-weight: bold;
+  /* Use variables for accent color */
+  color: var(--accent-color-green); /* Or your primary accent color */
+  font-weight: normal; /* Remove default bold maybe */
 }
 
 .nav-item:hover {

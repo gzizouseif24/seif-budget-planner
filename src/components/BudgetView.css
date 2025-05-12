@@ -48,6 +48,7 @@
 
 .budget-item-header .status-text {
   font-weight: bold;
+  font-size: 0.9em; /* Decrease font size */
 }
 
 .status-text.over-budget {
@@ -94,4 +95,12 @@
   text-align: center;
   color: var(--text-color-secondary);
   padding: 1rem 0;
+}
+
+/* --- NEW: Styles for the Edit Budget button --- */
+.edit-budget-btn {
+  padding: 0.25rem 0.5rem; /* Smaller padding */
+  font-size: 0.75em;    /* Smaller font size */
+  /* Add a little margin if it's too close to the text */
+  margin-left: 0.5rem; 
 } 

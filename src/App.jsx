@@ -5,8 +5,9 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 // Import Page Components
 import DashboardPage from './pages/DashboardPage';
 // import TransactionsPage from './pages/TransactionsPage'; // Removed as the page was deleted
+import TransactionsPage from './pages/TransactionsPage'; // Re-import the new page
 import BudgetsPage from './pages/BudgetsPage';
-import ReportsPage from './pages/ReportsPage';
+// import ReportsPage from './pages/ReportsPage'; // REMOVED IMPORT
 import SettingsPage from './pages/SettingsPage';
 
 // Import Common Components
@@ -21,9 +22,9 @@ import CategoryManager from './components/CategoryManager'; // Import CategoryMa
 import BudgetPlanner from './components/BudgetPlanner'; // Import BudgetPlanner
 import BudgetView from './components/BudgetView'; // Import BudgetView
 import DashboardSummary from './components/DashboardSummary'; // Import DashboardSummary
-import SpendingByCategoryChart from './components/SpendingByCategoryChart'; // Import
+// import SpendingByCategoryChart from './components/SpendingByCategoryChart'; // REMOVED IMPORT
 import BudgetProgressSummary from './components/BudgetProgressSummary';   // Import
-import MonthlySpendingTrendChart from './components/MonthlySpendingTrendChart'; // Import
+// import MonthlySpendingTrendChart from './components/MonthlySpendingTrendChart'; // REMOVED IMPORT
 import { deleteTransaction as deleteTransactionService } from './services/localStorageService'; // Import the service function
 import { getTransactions } from './services/localStorageService'; // Import getTransactions
 
@@ -112,9 +113,10 @@ function App() {
       <div className="main-content-area" style={{ paddingTop: '1rem', paddingBottom: '80px' }}> {/* Adjusted padding */}
         <Routes>
           <Route path="/" element={<DashboardPage {...globalProps} />} />
-          {/* <Route path="/transactions" element={<TransactionsPage {...globalProps} />} /> // Route removed */}
+          {/* Add the route for the transactions page */}
+          <Route path="/transactions" element={<TransactionsPage {...globalProps} />} /> 
           <Route path="/budgets" element={<BudgetsPage {...globalProps} />} />
-          <Route path="/reports" element={<ReportsPage {...globalProps} />} />
+          {/* <Route path="/reports" element={<ReportsPage {...globalProps} />} /> REMOVED ROUTE */}
           <Route path="/settings" element={<SettingsPage {...globalProps} />} />
           <Route path="*" element={<DashboardPage {...globalProps} />} />
         </Routes>

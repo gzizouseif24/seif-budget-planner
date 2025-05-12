@@ -52,8 +52,7 @@
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   border-left: 5px solid transparent; /* Placeholder for type indicator */
   transition: background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
 }
@@ -70,36 +69,51 @@
   border-left-color: var(--accent-color-red);
 }
 
-.transaction-info {
-  flex-grow: 1;
+.transaction-primary-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
 
-.transaction-info strong {
-  color: var(--text-color-secondary); /* Make labels like "Date:", "Category:" distinct */
-  font-weight: 500;
+.category-emoji {
+  font-size: 1.5em;
+  line-height: 1;
 }
 
-.transaction-info .date,
-.transaction-info .category-name {
-  color: var(--text-color-primary);
-  margin-left: 0.5em;
-}
-
-.transaction-info .note {
-  font-size: 0.9em;
-  color: #B0B0B0; /* Lighter secondary text for notes */
-  margin-top: 0.25rem;
-  display: block;
-}
-
-.transaction-info .note em {
+.date {
   color: var(--text-color-secondary);
+  font-size: 0.9em;
+}
+
+.transaction-amount-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .transaction-amount-type {
-  text-align: right;
-  min-width: 120px; /* Ensure enough space for amount and type */
-  margin-left: 1rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.note {
+  font-size: 0.95em;
+  color: var(--text-color-secondary);
+  font-style: italic;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+  flex-grow: 1;
+  min-width: 100px;
 }
 
 .transaction-amount-type .amount {
@@ -122,9 +136,12 @@
 }
 
 .transaction-actions {
-  margin-left: 1rem;
   display: flex;
-  gap: 0.5rem; /* Use gap for spacing buttons */
+  gap: 0.75rem;
+  flex-shrink: 0;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
 }
 
 .no-transactions-message {

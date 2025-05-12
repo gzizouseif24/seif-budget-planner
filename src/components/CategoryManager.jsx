@@ -128,29 +128,31 @@ function CategoryManager({ onCategoryUpdated }) {
         {categories.length === 0 ? (
           <p className="no-categories-message">No categories defined yet.</p>
         ) : (
-          <ul className="existing-categories-list">
-            {categories.map(category => (
-              <li key={category.id} className="category-item">
-                <div className="category-info">
-                  <span 
-                    className="category-color-swatch"
-                    style={{ backgroundColor: category.color || '#ccc' }}
-                  ></span>
-                  {category.iconEmoji && <span className="category-emoji">{category.iconEmoji}</span>}
-                  <span className="category-name">{category.name}</span>
-                  <span className="category-type">({category.type})</span>
-                </div>
-                <div className="category-actions">
-                  <button 
-                    onClick={() => handleDeleteCategory(category.id)} 
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="category-list-scroll-container">
+            <ul className="existing-categories-list">
+              {categories.map(category => (
+                <li key={category.id} className="category-item">
+                  <div className="category-info">
+                    <span 
+                      className="category-color-swatch"
+                      style={{ backgroundColor: category.color || '#ccc' }}
+                    ></span>
+                    {category.iconEmoji && <span className="category-emoji">{category.iconEmoji}</span>}
+                    <span className="category-name">{category.name}</span>
+                    <span className="category-type">({category.type})</span>
+                  </div>
+                  <div className="category-actions">
+                    <button 
+                      onClick={() => handleDeleteCategory(category.id)} 
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 // import { Link } from 'react-router-dom'; // No longer needed for Add Transaction button
 
 // Import components to be rendered on this page
@@ -10,6 +11,22 @@ import './DashboardPage.css'; // Import the CSS file
 
 // Import styles for this page if any (optional, or use global styles)
 // import './DashboardPage.css'; 
+
+// Helper function to format YYYY-MM to Month YYYY
+const formatMonthYear = (period) => {
+  if (!period || !period.includes('-')) return 'Current Month'; // Fallback
+  // Add a day to make it a valid date string for parsing
+  const dateStr = `${period}-01`; 
+  try {
+    const date = new Date(dateStr);
+    // Adjust for potential timezone issues by using UTC methods if the locale string is inconsistent
+    // For month/year, it's usually less critical than exact day formatting.
+    return date.toLocaleString('default', { month: 'long', year: 'numeric' });
+  } catch (e) {
+    console.error("Error formatting date period:", e);
+    return period; // Fallback to original period string on error
+  }
+};
 
 function DashboardPage(props) {
   const {
@@ -24,9 +41,11 @@ function DashboardPage(props) {
     onDeleteTransaction // Added this line
   } = props;
 
+  const displayMonth = formatMonthYear(currentMonthPeriod);
+
   return (
     <div className="dashboard-page-container">
-      <h1 className="dashboard-title">Budget Planner</h1>
+      <h1 className="dashboard-title">Budget for {displayMonth}</h1>
 
       <div className="add-transaction-button-container">
         <button 
@@ -63,6 +82,13 @@ function DashboardPage(props) {
         onEditTransaction={openTransactionModal} // Pass the function to open modal for editing
         onDeleteTransaction={onDeleteTransaction} // Pass the onDeleteTransaction from DashboardPage's props
       />
+
+      {/* Add link to view all transactions */}
+      <div className="view-all-transactions-link" style={{ textAlign: 'center', marginTop: '1rem' }}>
+        <Link to="/transactions" className="btn btn-link"> 
+          View All Transactions
+        </Link>
+      </div>
 
       {/* Render the modal */}
       <TransactionModal 

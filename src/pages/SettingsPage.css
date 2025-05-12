@@ -4,7 +4,7 @@
   background-color: var(--container-background);
   padding: 1.5rem; /* Consistent padding with other cards */
   border-radius: var(--border-radius);
-  margin: 1.5rem auto;
+  margin: 0 auto 1.5rem auto; /* Remove top margin, keep bottom and horizontal auto */
   max-width: 700px; /* Max width for the settings content */
   box-shadow: var(--card-shadow);
 }
@@ -16,6 +16,32 @@
   margin-bottom: 2rem;
   color: var(--text-color-primary);
   font-weight: 700;
+}
+
+/* --- NEW: Title Container Styles --- */
+.settings-page-title-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; /* Push items to opposite ends */
+  gap: 0.75rem; 
+  margin-bottom: 2rem; 
+}
+
+/* --- NEW: Logo Styles --- */
+.settings-page-logo {
+  height: 5rem; /* Reduced height */
+  width: auto;
+  order: 2; /* Place logo after the title visually */
+}
+
+/* Adjust original H2 styles to work within flex container */
+.settings-page-card .settings-page-title-container h2 {
+  text-align: left; 
+  font-size: 1.8rem; 
+  margin: 0; 
+  color: var(--text-color-primary);
+  font-weight: 700;
+  order: 1; /* Ensure title comes first visually */
 }
 
 /* Styling for section titles within the card if not handled by CategoryManager already */

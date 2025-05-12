@@ -1,0 +1,99 @@
+/* Styles for BudgetForm.jsx */
+
+/* Reusing modal overlay styles from TransactionModal.css might be better, 
+   but defining basic ones here for isolation */
+.budget-form-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100; /* Higher than bottom nav */
+}
+
+.budget-form-modal-content {
+  background-color: var(--container-background-darker, #2a2a2a); /* Slightly darker modal */
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 450px;
+  color: var(--text-color-primary);
+}
+
+.budget-form-modal-content h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-color-primary);
+}
+
+.budget-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.budget-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color-secondary);
+}
+
+.budget-form input[type="number"],
+.budget-form select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #444; /* Darker border */
+  border-radius: var(--border-radius-small);
+  background-color: #333; /* Dark input background */
+  color: var(--text-color-primary);
+  font-size: 1rem;
+  box-sizing: border-box; 
+}
+
+.budget-form select:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.budget-form input[type="number"]:focus,
+.budget-form select:focus {
+  outline: none;
+  border-color: var(--accent-color-green); /* Highlight focus */
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-green-rgb), 0.3); 
+}
+
+.budget-form .form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.budget-form .form-actions button {
+  flex-grow: 1; /* Make buttons share space */
+  padding: 0.75rem;
+}
+
+.error-message {
+  color: var(--accent-color-red);
+  background-color: rgba(var(--accent-color-red-rgb), 0.1);
+  border: 1px solid var(--accent-color-red);
+  padding: 0.75rem;
+  border-radius: var(--border-radius-small);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.no-categories-note {
+    font-size: 0.85em;
+    color: var(--text-color-secondary);
+    margin-top: 0.5rem;
+    font-style: italic;
+} 

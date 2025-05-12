@@ -71,6 +71,17 @@
 }
 
 /* Existing Categories List */
+
+/* NEW: Scroll container for the list */
+.category-list-scroll-container {
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  border: 1px solid #3a3a3a; /* Optional border to contain the scroll area */
+  border-radius: var(--border-radius-small);
+  padding: 0 0.5rem; /* Add padding inside scroll area */
+  margin-top: 0.5rem; /* Space above scroll area */
+}
+
 .existing-categories-list {
   list-style-type: none;
   padding: 0;
@@ -81,11 +92,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 0; /* Vertical padding, no horizontal as parent card has it */
-  border-bottom: 1px solid #3a3a3a; /* Subtle divider */
+  padding: 0.85rem 0; /* Keep vertical padding */
+  border-bottom: 1px solid #3a3a3a;
 }
 
-.category-item:last-child {
+/* Remove bottom border from last item INSIDE scroll container */
+.category-list-scroll-container .category-item:last-child {
   border-bottom: none;
 }
 
