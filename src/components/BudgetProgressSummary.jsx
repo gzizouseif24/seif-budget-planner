@@ -38,7 +38,9 @@ function BudgetProgressSummary({ appRefreshKey, currentMonthPeriod }) {
     <div className="budget-planner-summary-card">
       {/*<h4>Budget Planner ({currentMonthPeriod})</h4>*/}
       
-      <p className="budget-meter-label">Budget Meter</p>
+      <p className="budget-meter-label">
+        Total Budget = {budgetText} <span className="currency-suffix">TND</span>
+      </p>
       
       <div className="overall-progress-bar-container">
         <div 

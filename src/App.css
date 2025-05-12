@@ -29,6 +29,10 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Additions for static feel */
+  overscroll-behavior-y: contain; /* Prevent pull-to-refresh */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
 #root {

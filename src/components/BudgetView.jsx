@@ -128,7 +128,10 @@ function BudgetView({ appRefreshKey, onEditBudget }) {
               <li key={detail.categoryId} className="budget-view-item">
                 <div className="budget-item-header">
                   <span className="category-indicator" style={{ backgroundColor: category.color }}></span>
-                  <strong>{category.name}</strong>
+                  <strong>
+                    <span className="category-emoji" style={{ marginRight: '0.5em' }}>{category.emoji}</span> 
+                    {category.name}
+                  </strong>
                   <span className={`status-text ${statusClass}`} style={{ color: statusTextColor }}>
                     {isOverBudget ? 'Overspent' : 'Remaining'}: {remainingAmountDisplay}
                     <span className="currency-suffix"> TND</span>
