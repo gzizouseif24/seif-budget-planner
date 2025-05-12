@@ -137,7 +137,7 @@
 - [ ] **Implement Recurring Transaction Templates:**
   - [ ] Allow users to create templates for recurring transactions to speed up entry.
 
-## Testing & Deployment
+## Testing & DeploymentD
 - [ ] **Manual Testing:**
   - [ ] Thoroughly test all features on various mobile browsers and screen sizes.
   - [ ] Test edge cases and data validation.
