@@ -169,7 +169,8 @@ export const deleteTransaction = (transactionId) => {
 /**
  * Retrieves all categories from local storage.
  * If no categories are found, initializes them with default values.
- * Includes logic to add missing emojis to existing categories from initialCategories.
+ * Includes logic to add missing emojis to existing categories from initialCategories,
+ * prioritizing already existing emoji properties.
  * @returns {Array<Object>} An array of category objects.
  */
 export const getCategories = () => {
@@ -178,40 +179,38 @@ export const getCategories = () => {
 
   if (categories === null) {
     console.log('No categories found in local storage. Initializing with default categories.');
-    // Ensure initialCategories has emojis (already done in previous step)
     categories = initialCategories; 
     needsSave = true; // Need to save the initialized categories
   } else {
     // Categories exist, check if emojis need to be added/migrated
-    console.log('Existing categories found. Checking for missing emojis...');
+    console.log('Existing categories found. Checking for missing or incorrect emojis...');
     const initialCategoriesMap = initialCategories.reduce((map, cat) => {
       map[cat.id] = cat;
       return map;
     }, {});
 
     categories = categories.map(existingCat => {
-      // Check if the emoji property exists
-      if (!existingCat.hasOwnProperty('emoji')) {
-        console.log(`Category "${existingCat.name}" (ID: ${existingCat.id}) is missing emoji. Attempting to add.`);
-        const matchingInitialCat = initialCategoriesMap[existingCat.id];
-        if (matchingInitialCat) {
-          // Found a match in the default list, use its emoji
-          existingCat.emoji = matchingInitialCat.emoji;
-          console.log(`  -> Added emoji: ${existingCat.emoji}`);
-          needsSave = true;
-        } else {
-          // No match found (likely a user-added custom category), add default
-          existingCat.emoji = '❓'; 
-          console.log(`  -> Added default emoji: ${existingCat.emoji}`);
-          needsSave = true;
-        }
+      // If the category ALREADY has an emoji property, assume it's correct and skip.
+      if (existingCat.hasOwnProperty('emoji') && existingCat.emoji) {
+        // console.log(`Category "${existingCat.name}" already has emoji: ${existingCat.emoji}. Skipping.`);
+        return existingCat;
       }
-      // Return the category, potentially updated
+
+      // Emoji property is missing or empty, try to populate it.
+      console.log(`Category "${existingCat.name}" (ID: ${existingCat.id}) is missing or has empty emoji. Attempting to add.`);
+      needsSave = true; // We will be making a change
+      const matchingInitialCat = initialCategoriesMap[existingCat.id];
+      if (matchingInitialCat) {
+        existingCat.emoji = matchingInitialCat.emoji;
+        console.log(`  -> Matched initialCategory. Added emoji: ${existingCat.emoji}`);
+      } else {
+        existingCat.emoji = '❓'; // Default for custom categories missing an emoji
+        console.log(`  -> Custom category or no match. Added default emoji: ${existingCat.emoji}`);
+      }
       return existingCat;
     });
   }
 
-  // Save back to local storage ONLY if initialization happened or emojis were added
   if (needsSave) {
     console.log('Saving updated categories (initialization or emoji migration).');
     saveToLocalStorage(CATEGORIES_KEY, categories);
