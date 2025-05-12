@@ -5,12 +5,16 @@ const CATEGORIES_KEY = 'budgetApp_categories';
 const BUDGETS_KEY = 'budgetApp_budgets';
 
 const initialCategories = [
-  { id: "cat_food_expense", name: "Groceries", type: "expense", color: "#FFD700" },
-  { id: "cat_salary_income", name: "Salary", type: "income", color: "#ADFF2F" },
-  { id: "cat_transport_expense", name: "Transport", type: "expense", color: "#87CEFA" },
-  { id: "cat_utilities_expense", name: "Utilities", type: "expense", color: "#FF8C00" },
-  { id: "cat_freelance_income", name: "Freelance", type: "income", color: "#32CD32" },
-  { id: "cat_entertainment_expense", name: "Entertainment", type: "expense", color: "#DB7093" },
+  { id: "cat_food_expense", name: "Groceries", type: "expense", color: "#FFD700", emoji: "🛒" },
+  { id: "cat_salary_income", name: "Salary", type: "income", color: "#ADFF2F", emoji: "💰" },
+  { id: "cat_transport_expense", name: "Transport", type: "expense", color: "#87CEFA", emoji: "🚗" },
+  { id: "cat_utilities_expense", name: "Utilities", type: "expense", color: "#FF8C00", emoji: "💡" },
+  { id: "cat_freelance_income", name: "Freelance", type: "income", color: "#32CD32", emoji: "💼" },
+  { id: "cat_entertainment_expense", name: "Entertainment", type: "expense", color: "#DB7093", emoji: "🎉" },
+  { id: "cat_health_expense", name: "Health", type: "expense", color: "#FF69B4", emoji: "🏥" },
+  { id: "cat_education_expense", name: "Education", type: "expense", color: "#1E90FF", emoji: "🎓" },
+  { id: "cat_gifts_income", name: "Gifts", type: "income", color: "#FFC0CB", emoji: "🎁" },
+  { id: "cat_other_expense", name: "Other", type: "expense", color: "#D3D3D3", emoji: "❓" }
 ];
 
 /**

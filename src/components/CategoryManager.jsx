@@ -7,7 +7,7 @@ function CategoryManager({ onCategoryUpdated }) {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newCategoryType, setNewCategoryType] = useState('expense'); // Default to expense
   const [newCategoryColor, setNewCategoryColor] = useState('#000000'); // Default to black
-  const [newCategoryEmoji, setNewCategoryEmoji] = useState(''); // New state for emoji
+  const [newCategoryEmoji, setNewCategoryEmoji] = useState(''); // State for emoji
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function CategoryManager({ onCategoryUpdated }) {
       name: newCategoryName.trim(),
       type: newCategoryType,
       color: newCategoryColor,
-      iconEmoji: newCategoryEmoji.trim(), // Add emoji to category data
+      emoji: newCategoryEmoji.trim(), // Use 'emoji', not 'iconEmoji'
     };
 
     addCategory(categoryData);
@@ -137,7 +137,7 @@ function CategoryManager({ onCategoryUpdated }) {
                       className="category-color-swatch"
                       style={{ backgroundColor: category.color || '#ccc' }}
                     ></span>
-                    {category.iconEmoji && <span className="category-emoji">{category.iconEmoji}</span>}
+                    {category.emoji && <span className="category-emoji">{category.emoji}</span>}
                     <span className="category-name">{category.name}</span>
                     <span className="category-type">({category.type})</span>
                   </div>

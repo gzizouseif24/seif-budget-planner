@@ -35,6 +35,11 @@ body {
   -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
+/* Ensure all elements disable tap highlight for more robust coverage */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
