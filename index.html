@@ -4,11 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/seif-budget-planner/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+    {/* PWA & iOS Specific Meta Tags */}
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> { /* or 'default', 'black' */}
+    <meta name="apple-mobile-web-app-title" content="BudgetApp"> { /* Should match short_name */}
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png"> { /* Path relative to public folder */}
+    {/* Add links for other splash screens if needed */}
+
+    {/* Link to generated manifest (VitePWA usually injects this, but doesn't hurt to add) */}
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    {/* Theme Color */}
+    <meta name="theme-color" content="#1A1A1A"> { /* Match manifest theme_color */}
+
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1,900,700,500,301,701,300,501,401,901,400,2&display=swap" rel="stylesheet">
     <title>Budget Planner</title>
-    <script type="module" crossorigin src="/seif-budget-planner/assets/index-CG-6ee19.js"></script>
-    <link rel="stylesheet" crossorigin href="/seif-budget-planner/assets/index-CuQxC8iL.css">
-  </head>
+    <script type="module" crossorigin src="/seif-budget-planner/assets/index-CYLpHKiP.js"></script>
+    <link rel="stylesheet" crossorigin href="/seif-budget-planner/assets/index-BcVmd73I.css">
+  <link rel="manifest" href="/seif-budget-planner/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/seif-budget-planner/registerSW.js"></script></head>
   <body>
     <div id="root"></div>
   </body>

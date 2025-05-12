@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/seif-budget-planner/sw.js', { scope: '/seif-budget-planner/' })})}
