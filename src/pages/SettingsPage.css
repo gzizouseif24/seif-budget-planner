@@ -1,0 +1,75 @@
+/* Styles for SettingsPage.jsx */
+
+.settings-page-card {
+  background-color: var(--container-background);
+  padding: 1.5rem; /* Consistent padding with other cards */
+  border-radius: var(--border-radius);
+  margin: 1.5rem auto;
+  max-width: 700px; /* Max width for the settings content */
+  box-shadow: var(--card-shadow);
+}
+
+.settings-page-card > h2 { /* Overall "Settings" title */
+  text-align: left;
+  font-size: 1.8rem; /* Prominent title for the page */
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: var(--text-color-primary);
+  font-weight: 700;
+}
+
+/* Styling for section titles within the card if not handled by CategoryManager already */
+/* e.g., "Existing Categories" which is an h4 in CategoryManager */
+/* The design has "Existing Categories" and "Data Management" as similar weight titles */
+
+.data-management-section {
+  margin-top: 2.5rem; /* Space above Data Management */
+  padding-top: 1.5rem; /* Space inside if we add a border later */
+  border-top: 1px solid #3a3a3a; /* Separator line from categories */
+}
+
+.data-management-section h3 { /* "Data Management" title */
+  text-align: left;
+  font-size: 1.2rem;
+  margin-top: 0; /* Reset margin if padding-top on parent is used */
+  margin-bottom: 1.5rem;
+  color: var(--text-color-secondary);
+  font-weight: 500;
+}
+
+.data-management-action {
+  margin-bottom: 1.5rem;
+}
+
+.data-management-action h4 { /* e.g., "Export Data (CSV)" */
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.data-management-action p {
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+  margin-bottom: 1rem;
+}
+
+.data-management-action .btn {
+  width: 100%;
+  padding: 0.75rem 1rem; /* Make these buttons a bit larger */
+  background-color: #383838; /* Darker background for these specific buttons */
+  border-color: #4a4a4a; /* Subtle border */
+  color: var(--text-color-primary);
+}
+
+.data-management-action .btn:hover {
+  background-color: #4a4a4a;
+  border-color: #5c5c5c;
+}
+
+.data-management-action .btn:disabled {
+  background-color: #252525; /* Even darker and more muted when disabled */
+  border-color: #333;
+  color: var(--text-color-secondary);
+  opacity: 0.7;
+} 

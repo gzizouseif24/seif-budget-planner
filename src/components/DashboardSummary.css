@@ -1,0 +1,79 @@
+/* Styles for DashboardSummary.jsx */
+
+.dashboard-summary-card { /* Changed from .dashboard-summary-container */
+  background-color: var(--container-background); /* Dark card background */
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0; /* Margin top/bottom, no horizontal auto margin as it fills container space */
+  color: var(--text-color-primary);
+  box-shadow: var(--card-shadow);
+  text-align: center; /* Center align title and content within card */
+}
+
+.dashboard-summary-card h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem; /* Adjusted title size from design */
+  font-weight: 500;
+  color: var(--text-color-primary);
+}
+
+.summary-values-container {
+  display: flex;
+  justify-content: space-around; /* Space out Income and Expenses */
+  align-items: center; /* Align items if they have different heights */
+  gap: 1rem; /* Gap between income and expense blocks */
+}
+
+.summary-value-item {
+  display: flex;
+  flex-direction: column; /* Stack label and amount */
+  align-items: center; /* Center label and amount */
+  padding: 1rem; /* Padding within each item block */
+  min-width: 120px; /* Ensure items have some width */
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.8rem; /* Smaller label text */
+  color: var(--text-color-secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.summary-value-item .amount {
+  font-size: 2rem; /* Larger amount text as per design */
+  font-weight: 700; /* Bold amount */
+  line-height: 1.2;
+}
+
+.income-amount {
+  color: var(--accent-color-green);
+}
+
+.expense-amount {
+  color: var(--accent-color-red);
+}
+
+/* Remove old styles no longer used */
+/*
+.summary-items-wrapper { ... }
+.summary-item { ... }
+.summary-item strong { ... }
+.summary-item p { ... } // Replaced by .amount styling
+.income-item { ... }
+.expenses-item { ... }
+.balance-item { ... }
+.balance-item p.positive-balance { ... }
+.balance-item p.negative-balance { ... }
+*/
+
+.loading-message {
+  color: var(--text-color-secondary);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9em;
+} 

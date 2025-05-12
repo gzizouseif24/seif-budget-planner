@@ -1,0 +1,74 @@
+/* Styles for BudgetProgressSummary.jsx */
+.budget-planner-summary-card {
+  background-color: #2C2C2C; /* Dark container background from global styles */
+  padding: 20px;
+  border-radius: 8px; /* Common border-radius */
+  margin: 20px auto;
+  max-width: 600px; /* Adjust as needed */
+  color: #F0F0F0; /* Light text color */
+  text-align: center; /* Center the title */
+}
+
+.budget-planner-summary-card h4 {
+  font-size: 1.5em;
+  margin-bottom: 25px;
+  color: #FFFFFF;
+}
+
+.budget-summary-figures {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.budget-summary-figures div {
+  text-align: center;
+}
+
+.budget-summary-figures strong {
+  display: block;
+  font-size: 0.9em;
+  color: #A0A0A0; /* Lighter label color */
+  margin-bottom: 5px;
+}
+
+.budget-summary-figures p {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.overall-progress-bar-container {
+  width: 100%;
+  background-color: #1A1A1A; /* Darker background for the bar track */
+  border-radius: 10px;
+  padding: 4px; /* Optional: if you want a bit of border effect */
+  margin-top: 10px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.overall-progress-bar-fill {
+  height: 25px; /* Prominent height */
+  background-color: #4CAF50; /* Accent color for progress - can be theme variable */
+  border-radius: 8px;
+  transition: width 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9em;
+  line-height: 25px; /* Vertically center text if needed */
+}
+
+.loading-message-budget-summary,
+.no-budget-message-summary {
+  color: #A0A0A0;
+  text-align: center;
+  padding: 20px;
+  background-color: #2C2C2C; /* Match card background */
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 600px;
+} 

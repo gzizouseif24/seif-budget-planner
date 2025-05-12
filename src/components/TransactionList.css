@@ -1,0 +1,136 @@
+/* Styles for TransactionList.jsx */
+.transaction-list-container {
+  background-color: var(--container-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.transaction-list-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-color-primary);
+}
+
+.transaction-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+  background-color: #1F1F1F; /* Slightly different bg for filter bar */
+  padding: 1rem;
+  border-radius: calc(var(--border-radius) * 0.75);
+}
+
+.transaction-filters > div {
+  display: flex;
+  flex-direction: column; /* Stack label and select */
+}
+
+.transaction-filters label {
+  margin-right: 0; /* Remove right margin as it's stacked now */
+  margin-bottom: 0.35rem; /* Space between label and select */
+  font-size: 0.9em;
+}
+
+.transaction-filters select {
+  min-width: 180px; /* Give selects a decent minimum width */
+}
+
+.transaction-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transaction-item {
+  background-color: #1F1F1F; /* Dark background for each item */
+  border-radius: calc(var(--border-radius) * 0.75);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid transparent; /* Placeholder for type indicator */
+  transition: background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+}
+
+.transaction-item:last-child {
+  margin-bottom: 0;
+}
+
+.transaction-item.income {
+  border-left-color: var(--accent-color-green);
+}
+
+.transaction-item.expense {
+  border-left-color: var(--accent-color-red);
+}
+
+.transaction-info {
+  flex-grow: 1;
+}
+
+.transaction-info strong {
+  color: var(--text-color-secondary); /* Make labels like "Date:", "Category:" distinct */
+  font-weight: 500;
+}
+
+.transaction-info .date,
+.transaction-info .category-name {
+  color: var(--text-color-primary);
+  margin-left: 0.5em;
+}
+
+.transaction-info .note {
+  font-size: 0.9em;
+  color: #B0B0B0; /* Lighter secondary text for notes */
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.transaction-info .note em {
+  color: var(--text-color-secondary);
+}
+
+.transaction-amount-type {
+  text-align: right;
+  min-width: 120px; /* Ensure enough space for amount and type */
+  margin-left: 1rem;
+}
+
+.transaction-amount-type .amount {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+}
+
+.transaction-amount-type .amount.income {
+  color: var(--accent-color-green);
+}
+
+.transaction-amount-type .amount.expense {
+  color: var(--accent-color-red);
+}
+
+.transaction-amount-type .type {
+  font-size: 0.85em;
+  color: var(--text-color-secondary);
+}
+
+.transaction-actions {
+  margin-left: 1rem;
+  display: flex;
+  gap: 0.5rem; /* Use gap for spacing buttons */
+}
+
+.no-transactions-message {
+  text-align: center;
+  color: var(--text-color-secondary);
+  padding: 1rem 0;
+  background-color: #1F1F1F;
+  border-radius: calc(var(--border-radius) * 0.75);
+} 

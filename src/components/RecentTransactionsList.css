@@ -1,0 +1,120 @@
+/* RecentTransactionsList.css */
+
+.recent-transactions-container {
+  /* Assuming this is already styled as a card by a global .card class or page-specific styles */
+  /* If not, add card styles here: 
+    background-color: var(--container-background);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin: 1.5rem 0; 
+  */
+}
+
+.recent-transactions-container h4 {
+  font-size: 1.1rem; /* Matching DashboardSummary title size */
+  font-weight: 500;
+  color: var(--text-color-primary);
+  margin-top: 0; /* If .card provides padding */
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.recent-transactions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px; /* Adjust as needed - e.g., for about 4-5 items */
+  overflow-y: auto;   /* Add vertical scrollbar if content exceeds max-height */
+}
+
+.recent-transaction-item {
+  /* Using a slightly different background for items if on a card, or make transparent if card has padding */
+  background-color: #1F1F1F; /* Darker item background on the card */
+  border-radius: calc(var(--border-radius) * 0.75); /* Match other list item roundness */
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Removed box-shadow and hover transform for a flatter look as per new design */
+}
+
+.recent-transaction-item:last-child {
+  margin-bottom: 0;
+}
+
+.transaction-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Space between emoji container and details */
+}
+
+.transaction-emoji {
+  font-size: 1.2rem; /* Adjusted emoji size */
+  background-color: #2C2C2C; /* Emoji container background - same as card background for contrast */
+  border-radius: calc(var(--border-radius) * 0.5); /* Rounded square */
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.transaction-category-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color-primary);
+}
+
+.transaction-date {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+}
+
+.transaction-amount {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color-primary);
+}
+
+.transaction-amount.income-amount {
+  color: var(--accent-color-green);
+}
+
+.transaction-amount.expense-amount {
+  /* Default color is fine, no specific color for expense amount in this design apart from text-color-primary */
+  /* color: var(--accent-color-red); */ /* Uncomment if expenses should be red */
+}
+
+/* Style for the new delete button */
+.delete-transaction-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color-red); /* Use a red color from your theme */
+  font-size: 1.3rem; /* Adjust size as needed */
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem; /* Minimal padding */
+  margin-left: 0.5rem; /* Space it from the amount */
+  line-height: 1; /* Ensure 'x' is vertically centered */
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.delete-transaction-btn:hover,
+.delete-transaction-btn:focus {
+  background-color: rgba(var(--accent-color-red-rgb, 244, 67, 54), 0.15); /* Use RGB for alpha, ensure --accent-color-red-rgb is defined or use a static rgba value */
+  color: var(--accent-color-red); /* Keep red color on hover */
+  outline: none;
+}
+
+/* Ensure --accent-color-red-rgb is defined in App.css if not already, e.g.: */
+/* --accent-color-red-rgb: 244, 67, 54; */

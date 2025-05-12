@@ -1,0 +1,356 @@
+:root {
+  --font-family-main: 'Satoshi', sans-serif;
+  --background-color: #1A1A1A; /* Dark background */
+  --container-background: #2C2C2C; /* Slightly lighter for cards */
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --text-color-primary: #F5F5F5; /* Light grey/off-white for primary text */
+  --text-color-secondary: #A0A0A0; /* Muted grey for secondary text */
+  --accent-color-blue: #6A5AF9; /* Vibrant blue from progress bar */
+  --accent-color-blue-rgb: 106, 90, 249; /* RGB for accent-color-blue */
+  --accent-color-green: #2ECC71; /* Example green from chart */
+  --accent-color-orange: #FFA500; /* Example orange from chart */
+  --accent-color-yellow: #FFC107; /* Yellow for warnings/nearing limits */
+  --accent-color-red: #F44336;    /* Red for errors/over budget */
+  --accent-color-red-rgb: 244, 67, 54; /* RGB for accent-color-red */
+  --accent-color-purple: #9B59B6; /* Example purple from chart */
+  --border-radius: 12px; /* Rounded corners for containers */
+}
+
+body {
+  font-family: var(--font-family-main);
+  margin: 0;
+  padding: 0;
+  /* background-color: var(--background-color); */ /* Replaced by gradient */
+  background-image: linear-gradient(to bottom, #2C2C2C, #1A1A1A);
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensures gradient covers the whole viewport height */
+  min-height: 100vh; /* Ensure body takes at least full viewport height */
+  color: var(--text-color-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* General heading styles (can be overridden per component) */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color-primary);
+  margin-top: 0;
+}
+
+/* Basic styles for cards/containers based on design */
+.card {
+  background-color: var(--container-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1.5rem;
+}
+
+.app-title {
+  font-size: 3rem; /* Large title as in design */
+  font-weight: 700; /* Satoshi bold */
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* Utility class for screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Removing default Vite logo styles if they were here */
+.logo {
+  /* remove or repurpose */
+}
+.logo:hover {
+  /* remove or repurpose */
+}
+.logo.react:hover {
+  /* remove or repurpose */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    /* remove or repurpose */
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Global Button Styles */
+.btn {
+  display: inline-block;
+  font-weight: 500; /* Satoshi medium */
+  line-height: 1.5;
+  color: var(--text-color-primary);
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
+  font-size: 1rem;
+  border-radius: var(--border-radius); /* Use global border-radius */
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-decoration: none; /* For Link components styled as buttons */
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Primary Button (e.g., Add, Save) */
+.btn-primary {
+  color: #FFFFFF; /* White text for primary button */
+  background-color: var(--accent-color-green); /* Using green from your theme */
+  border-color: var(--accent-color-green);
+}
+
+.btn-primary:hover {
+  background-color: #25a25a; /* Darker shade of green */
+  border-color: #25a25a;
+  color: #FFFFFF;
+}
+
+/* Secondary Button (e.g., Edit, View Details) */
+.btn-secondary {
+  color: var(--accent-color-blue); /* Using blue from your theme */
+  background-color: transparent;
+  border: 1px solid var(--accent-color-blue);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-color-blue);
+  color: #FFFFFF;
+}
+
+/* Danger/Destructive Button (e.g., Delete) */
+.btn-danger {
+  color: #FFFFFF;
+  background-color: #dc3545; /* Common Bootstrap danger red */
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Darker red */
+  border-color: #bd2130;
+  color: #FFFFFF;
+}
+
+/* Link styled as a button */
+.btn-link {
+  font-weight: 400;
+  color: var(--accent-color-blue);
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+}
+
+.btn-link:hover {
+  color: #5445cc; /* Darker blue */
+  opacity: 1; /* Override general btn hover if needed */
+}
+
+/* Small Button */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: calc(var(--border-radius) * 0.8); /* Slightly smaller radius */
+}
+
+/* Global Form Element Styles */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+select,
+textarea {
+  display: block; /* Or inline-block depending on desired layout flow */
+  width: 100%; /* Default to full width, can be overridden by specific component styles */
+  padding: 0.65rem 0.9rem; /* Slightly more padding for better touch targets */
+  font-family: var(--font-family-main);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color-primary);
+  background-color: #252525; /* Slightly lighter than main bg for inputs */
+  background-clip: padding-box;
+  border: 1px solid #555; /* Darker border */
+  appearance: none; /* Remove default system appearance */
+  border-radius: calc(var(--border-radius) * 0.6); /* Consistent with other elements */
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box; /* Ensure padding and border are included in width/height */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent-color-blue);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(var(--accent-color-blue-rgb, 106, 90, 249), 0.25);
+}
+
+/* Styling for select dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23A0A0A0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 16px 12px;
+  padding-right: 2.5rem; /* Make space for the arrow */
+}
+
+/* Remove spinner from number inputs for a cleaner look (optional) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Date input styling - trying to make indicators visible on dark bg */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8); /* Invert the color of the picker icon, adjust value as needed */
+}
+
+/* Color input - difficult to style consistently, provide some basic conformity */
+input[type="color"] {
+  height: 40px; /* Match height of other inputs roughly */
+  padding: 0.25rem; /* Minimal padding */
+  border-radius: calc(var(--border-radius) * 0.5);
+  background-color: #252525;
+  border: 1px solid #555;
+  min-width: 60px; /* Ensure it has some width */
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: calc(var(--border-radius) * 0.4);
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: calc(var(--border-radius) * 0.4);
+}
+
+textarea {
+  min-height: 80px; /* Default min height */
+  resize: vertical; /* Allow vertical resize */
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color-secondary);
+  text-align: left;
+  font-weight: 500;
+}
+
+/* =================================== */
+/* Responsive Styles (Mobile First) */
+/* =================================== */
+
+@media (max-width: 768px) {
+  body {
+    /* Optionally reduce base font size for smaller screens */
+    /* font-size: 14px; */ /* Example, adjust as needed */
+  }
+
+  #root {
+    /* Reduce padding on smaller screens to maximize space */
+    padding: 1rem;
+  }
+
+  .app-title {
+    font-size: 2.2rem; /* Reduce title size for mobile */
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    padding: 1rem; /* Reduce card padding */
+    margin-bottom: 1rem;
+  }
+
+  /* Adjust default button padding and font size for better touch targets if needed */
+  .btn {
+    padding: 0.6rem 1rem; /* Slightly larger touch area might be good */
+    font-size: 0.95rem;
+  }
+
+  /* Adjust form input padding and font size for mobile */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  select,
+  textarea {
+    padding: 0.75rem 1rem; /* Ensure comfortable touch targets */
+    font-size: 0.95rem;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.6rem; }
+  h3 { font-size: 1.4rem; }
+  /* Add h4, h5, h6 if you use them frequently and want them smaller */
+}
+
+/* You can add more specific breakpoints if needed, e.g., for very small phones */
+@media (max-width: 480px) {
+  #root {
+    padding: 0.75rem;
+  }
+
+  .app-title {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 0.75rem;
+  }
+
+  /* Further adjustments for very small screens if necessary */
+}

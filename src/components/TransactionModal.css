@@ -1,0 +1,51 @@
+/* Styles for TransactionModal.jsx */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.modal-content {
+  background-color: var(--container-background);
+  padding: 1.5rem; /* Adjusted padding */
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px; /* Max width for the modal */
+  max-height: 85vh; /* Allow modal to take up to 85% of viewport height */
+  overflow-y: auto;   /* Enable vertical scrolling if content exceeds max-height */
+  position: relative; /* For potential close button positioning if inside */
+  display: flex; /* Use flex to help manage internal layout better */
+  flex-direction: column; /* Stack form and cancel button */
+}
+
+/* Style for the TransactionForm when inside a modal, if needed */
+.modal-content .transaction-form-container { /* Assuming TransactionForm might get a container class */
+  margin: 0; /* Reset margin if it was for page layout */
+  max-width: 100%; /* Allow it to fill modal content area */
+  flex-shrink: 0; /* Prevent form from shrinking if content is too much, let modal scroll */
+}
+
+/* Optional: style for the H3 inside TransactionForm when in modal */
+.modal-content h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-color-primary);
+}
+
+.modal-close-btn {
+  margin-top: 1.5rem; /* Increased space above the cancel button */
+  width: 100%;
+  flex-shrink: 0; /* Prevent cancel button from shrinking */
+}
+
+/* We might need to adjust TransactionForm.css or its structure slightly
+   if its internal styling conflicts with modal layout, e.g., its own max-width. */ 

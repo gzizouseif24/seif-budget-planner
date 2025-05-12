@@ -1,0 +1,97 @@
+/* Styles for BudgetView.jsx */
+.budget-view-container {
+  background-color: var(--container-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  margin: 20px auto;
+  max-width: 700px; 
+}
+
+.budget-view-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-color-primary);
+}
+
+.budget-view-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.budget-view-item {
+  padding: 1rem;
+  /* border-bottom: 1px solid #444; */ /* Optional: if you prefer borders over distinct cards */
+  background-color: #1F1F1F; /* Slightly different dark shade for item distinctiveness if not using borders */
+  border-radius: calc(var(--border-radius) * 0.75); /* Slightly smaller radius for inner cards */
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.budget-view-item:last-child {
+  /* border-bottom: none; */
+  margin-bottom: 0;
+}
+
+.budget-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.budget-item-header strong {
+  font-size: 1.2em; /* Slightly larger category name */
+  color: var(--text-color-primary);
+}
+
+.budget-item-header .status-text {
+  font-weight: bold;
+}
+
+.status-text.over-budget {
+  color: var(--accent-color-orange); /* Or a red like #f44336 */
+}
+
+.status-text.on-track {
+  color: var(--accent-color-green);
+}
+
+.budget-item-details {
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Progress Bar specific to BudgetView */
+.budget-view-progress-bar-container {
+  height: 18px; /* Can be slimmer than overall budget progress */
+  width: 100%;
+  background-color: #383838; /* Darker track for individual bars */
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.budget-view-progress-bar-fill {
+  height: 100%;
+  /* background-color will be set by inline style based on status */
+  border-radius: inherit; /* Keep it smooth */
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Show percentage at the end */
+  padding-right: 5px; /* Padding for text inside bar */
+  font-size: 0.75em;
+  color: white;
+}
+
+.budget-view-container .loading-message,
+.budget-view-container .no-budgets-message {
+  text-align: center;
+  color: var(--text-color-secondary);
+  padding: 1rem 0;
+} 
