@@ -290,15 +290,16 @@ label {
 /* Responsive Styles (Mobile First) */
 /* =================================== */
 
-@media (max-width: 768px) {
+/* Adjustments for Tablets and Large Phones */
+/* @media (max-width: 768px) { */ /* Original breakpoint */
+@media (max-width: 900px) { /* Widened breakpoint to include 828px width */
   body {
-    /* Optionally reduce base font size for smaller screens */
-    /* font-size: 14px; */ /* Example, adjust as needed */
+    /* Maybe slightly smaller base font size if needed */
+    /* font-size: 15px; */
   }
 
   #root {
-    /* Reduce padding on smaller screens to maximize space */
-    padding: 1rem;
+    padding: 1rem; /* Reduced padding for medium screens */
   }
 
   .app-title {
@@ -338,10 +339,10 @@ label {
   /* Add h4, h5, h6 if you use them frequently and want them smaller */
 }
 
-/* You can add more specific breakpoints if needed, e.g., for very small phones */
+/* Adjustments for Smaller Mobile Phones */
 @media (max-width: 480px) {
   #root {
-    padding: 0.75rem;
+    padding: 0.5rem; /* Even less padding for small screens */
   }
 
   .app-title {
