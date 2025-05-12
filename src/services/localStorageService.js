@@ -168,26 +168,55 @@ export const deleteTransaction = (transactionId) => {
 
 /**
  * Retrieves all categories from local storage.
- * If no categories are found (e.g., first app run), it initializes them with default values.
+ * If no categories are found, initializes them with default values.
+ * Includes logic to add missing emojis to existing categories from initialCategories.
  * @returns {Array<Object>} An array of category objects.
  */
 export const getCategories = () => {
   let categories = loadFromLocalStorage(CATEGORIES_KEY, null); // Load with null to detect if not present
+  let needsSave = false;
+
   if (categories === null) {
     console.log('No categories found in local storage. Initializing with default categories.');
-    saveToLocalStorage(CATEGORIES_KEY, initialCategories);
-    categories = initialCategories;
-  } else if (categories.length === 0) {
-    // This case handles if the key exists but is an empty array, 
-    // potentially from a previous state or accidental clear.
-    // You might decide if you want to re-initialize or leave as is.
-    // For now, let's re-initialize if it's an empty array after being explicitly set.
-    // However, to prevent re-initializing an intentionally empty list, this part is tricky.
-    // A more robust way would be a version number or a specific flag.
-    // For simplicity now, if it *was* null and then we set initialCategories, this branch won't be hit on first load.
-    // If it *wasn't* null but is empty, we assume it was intentionally cleared, so we don't re-populate.
-    // The `null` check above is the primary first-load initializer.
+    // Ensure initialCategories has emojis (already done in previous step)
+    categories = initialCategories; 
+    needsSave = true; // Need to save the initialized categories
+  } else {
+    // Categories exist, check if emojis need to be added/migrated
+    console.log('Existing categories found. Checking for missing emojis...');
+    const initialCategoriesMap = initialCategories.reduce((map, cat) => {
+      map[cat.id] = cat;
+      return map;
+    }, {});
+
+    categories = categories.map(existingCat => {
+      // Check if the emoji property exists
+      if (!existingCat.hasOwnProperty('emoji')) {
+        console.log(`Category "${existingCat.name}" (ID: ${existingCat.id}) is missing emoji. Attempting to add.`);
+        const matchingInitialCat = initialCategoriesMap[existingCat.id];
+        if (matchingInitialCat) {
+          // Found a match in the default list, use its emoji
+          existingCat.emoji = matchingInitialCat.emoji;
+          console.log(`  -> Added emoji: ${existingCat.emoji}`);
+          needsSave = true;
+        } else {
+          // No match found (likely a user-added custom category), add default
+          existingCat.emoji = '❓'; 
+          console.log(`  -> Added default emoji: ${existingCat.emoji}`);
+          needsSave = true;
+        }
+      }
+      // Return the category, potentially updated
+      return existingCat;
+    });
   }
+
+  // Save back to local storage ONLY if initialization happened or emojis were added
+  if (needsSave) {
+    console.log('Saving updated categories (initialization or emoji migration).');
+    saveToLocalStorage(CATEGORIES_KEY, categories);
+  }
+
   return categories;
 };
 
