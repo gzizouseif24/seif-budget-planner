@@ -130,6 +130,24 @@
   font-size: 1.2em; /* If emojis are used */
 }
 
+.category-actions {
+  display: flex; /* Use flexbox for button layout */
+  gap: 0.5rem; /* Add space between buttons */
+  align-items: center; /* Align buttons vertically */
+}
+
+/* Style for the edit button (can be same as secondary or custom) */
+.category-actions .btn-edit {
+  /* Assuming btn-secondary btn-sm gives desired base style */
+  /* Add any specific overrides if needed */
+}
+
+/* Optional: Style the item being edited */
+.category-item.editing {
+  background-color: rgba(var(--accent-color-blue-rgb), 0.1); /* Subtle highlight */
+  border-left: 3px solid var(--accent-color-blue);
+}
+
 .category-actions .btn-danger {
   /* Uses global .btn .btn-danger .btn-sm styles */
   /* Design shows a more pill-shaped red button. Global .btn-danger can be adjusted or overridden here. */

@@ -14,10 +14,22 @@ function RecentTransactionsList({ numberOfTransactionsToShow = 3, onEditTransact
     const allTransactions = getTransactions(); // This will now log extensively from LS_Service
     console.log('[RecentTransactionsList] Raw transactions from getTransactions():', JSON.parse(JSON.stringify(allTransactions.slice(0,10)))); // Log first 10 raw transactions
     
-    // Sort transactions by date, most recent first
-    const sortedTransactions = [...allTransactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort transactions: First by date descending, then by ID descending as tie-breaker
+    const sortedTransactions = [...allTransactions].sort((a, b) => {
+      const dateDiff = new Date(b.date) - new Date(a.date);
+      if (dateDiff !== 0) {
+        return dateDiff; // Sort by date descending
+      }
+      // If dates are the same, sort by ID descending (assuming higher ID means later)
+      // Simple string comparison works here because IDs are generated with timestamps
+      if (b.id > a.id) return 1;
+      if (a.id > b.id) return -1;
+      return 0;
+    });
+
+    // Slice the latest transactions AFTER sorting
     setRecentTransactions(sortedTransactions.slice(0, numberOfTransactionsToShow));
-    console.log('[RecentTransactionsList] Set recentTransactions (first 3):', JSON.parse(JSON.stringify(recentTransactions.slice(0,3))));
+    console.log('[RecentTransactionsList] Set recentTransactions (first 3 after refined sort):', JSON.parse(JSON.stringify(recentTransactions.slice(0,3))));
 
   }, [numberOfTransactionsToShow, appRefreshKey]); // Added appRefreshKey to dependency array to refresh list
 

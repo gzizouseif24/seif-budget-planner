@@ -77,7 +77,7 @@ function DashboardPage(props) {
           The numberOfTransactionsToShow can be a prop here.
       */}
       <RecentTransactionsList 
-        numberOfTransactionsToShow={5} 
+        numberOfTransactionsToShow={3}
         appRefreshKey={appRefreshKey} // Ensure this refreshes if a transaction is added/edited via modal
         onEditTransaction={openTransactionModal} // Pass the function to open modal for editing
         onDeleteTransaction={onDeleteTransaction} // Pass the onDeleteTransaction from DashboardPage's props
