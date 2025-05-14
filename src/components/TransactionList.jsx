@@ -9,13 +9,82 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState('all'); // 'all', 'income', 'expense'
   const [filterCategory, setFilterCategory] = useState('all'); // 'all' or category.id
+  // Add state for the processed list that will include daily summaries
+  const [displayItems, setDisplayItems] = useState([]);
 
   useEffect(() => {
     const loadData = () => {
       setLoading(true);
       const loadedTransactions = getTransactions();
       const loadedCategories = getCategories();
-      setTransactions(loadedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))); // Sort by date, newest first
+      
+      // --- START: New logic for processing transactions and creating summaries ---
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalize today to the start of the day for accurate comparison
+
+      const pastDayExpenses = {}; // Stores { 'YYYY-MM-DD': totalAmount }
+      const currentDayTransactions = [];
+      const incomeTransactions = [];
+
+      loadedTransactions.forEach(transaction => {
+        const transactionDate = new Date(transaction.date);
+        transactionDate.setHours(0, 0, 0, 0); // Normalize transaction date
+
+        if (transaction.type === 'income') {
+          incomeTransactions.push(transaction);
+        } else { // Expense transactions
+          if (transactionDate.getTime() < today.getTime()) { // Past day expense
+            const dateString = transaction.date; // Use original YYYY-MM-DD string for grouping
+            if (!pastDayExpenses[dateString]) {
+              pastDayExpenses[dateString] = 0;
+            }
+            pastDayExpenses[dateString] += transaction.amount;
+          } else { // Current day expense
+            currentDayTransactions.push(transaction);
+          }
+        }
+      });
+
+      let newDisplayItems = [];
+      // Add daily expense summaries
+      for (const dateString in pastDayExpenses) {
+        newDisplayItems.push({
+          id: `summary-${dateString}`, // Unique ID for the summary item
+          type: 'expense_summary', // Special type for identification
+          date: dateString,
+          amount: pastDayExpenses[dateString],
+          isSummary: true,
+        });
+      }
+
+      // Add individual income transactions (all dates)
+      newDisplayItems = newDisplayItems.concat(incomeTransactions);
+      // Add individual current day expense transactions
+      newDisplayItems = newDisplayItems.concat(currentDayTransactions);
+
+      // Sort all display items: summaries and individual transactions by date, newest first
+      // For items on the same date, summaries (representing the whole day) might come before individual items
+      // or we ensure individual items of that day are not shown if a summary for that day exists (for expenses).
+      // The current logic separates past day expenses into summaries, and keeps income and current day expenses separate.
+      newDisplayItems.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        if (dateB.getTime() !== dateA.getTime()) {
+          return dateB.getTime() - dateA.getTime(); // Sort by date descending
+        }
+        // If dates are the same, summaries might be ordered differently if needed, or by ID for stability
+        // For now, primary sort by date is most important.
+        // If 'a' is a summary and 'b' is not, 'a' might come first for that day or based on how we want to group visually.
+        // However, income of that day will also be there. Let's just sort by date for now, then ID for tie-breaking.
+        if (a.isSummary && !b.isSummary && dateA.getTime() === dateB.getTime()) return -1; // Summaries first on their day
+        if (!a.isSummary && b.isSummary && dateA.getTime() === dateB.getTime()) return 1;  // Summaries first on their day
+        return (b.id > a.id) ? 1 : -1; // Fallback sort by ID descending for stability
+      });
+      
+      setDisplayItems(newDisplayItems);
+      // setTransactions(loadedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))); // Original line, replaced by setDisplayItems
+      // --- END: New logic --- 
+      
       setCategories(loadedCategories);
       setLoading(false);
     };
@@ -45,24 +114,27 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
   }, [categories, filterType]);
 
   // Memoize filtered transactions to avoid re-calculating on every render unless dependencies change
-  const filteredTransactions = useMemo(() => {
-    return transactions
-      .filter(transaction => {
+  const filteredDisplayItems = useMemo(() => {
+    return displayItems
+      .filter(item => {
         if (filterType === 'all') return true;
-        return transaction.type === filterType;
+        if (filterType === 'income' && item.type === 'income') return true;
+        if (filterType === 'expense' && (item.type === 'expense' || item.isSummary)) return true; // Summaries are expenses
+        return false;
       })
-      .filter(transaction => {
+      .filter(item => {
+        if (item.isSummary) return true; // Category filter does not apply to summaries
         if (filterCategory === 'all') return true;
-        return transaction.categoryId === filterCategory;
+        return item.categoryId === filterCategory;
       });
-  }, [transactions, filterType, filterCategory]);
+  }, [displayItems, filterType, filterCategory]);
 
   if (loading) {
     return <p className="loading-message">Loading transactions...</p>;
   }
 
   // Use filteredTransactions count for the empty message check
-  if (transactions.length === 0) { 
+  if (displayItems.length === 0) { 
     return <p className="no-transactions-message">No transactions recorded yet.</p>;
   }
 
@@ -94,14 +166,44 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
         </div>
       </div>
 
-      {filteredTransactions.length === 0 && transactions.length > 0 && (
+      {filteredDisplayItems.length === 0 && displayItems.length > 0 && (
         <p className="no-transactions-message">No transactions match your current filters.</p>
       )}
 
-      {/* Use filteredTransactions here */}
-      {filteredTransactions.length > 0 && ( 
+      {/* Use filteredDisplayItems here and map over them */}
+      {filteredDisplayItems.length > 0 && ( 
         <ul className="transaction-list">
-          {filteredTransactions.map(transaction => {
+          {filteredDisplayItems.map(item => {
+            if (item.isSummary) {
+              // --- Render Daily Expense Summary Item ---
+              const formatDate = (dateString) => {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${month}/${day}`;
+              };
+              return (
+                <li key={item.id} className="transaction-item daily-summary-item">
+                  <div className="transaction-primary-info">
+                    <span className="category-emoji">📊</span> {/* Or a specific summary emoji */}
+                    <span className="date">{formatDate(item.date)} - Daily Expenses</span>
+                  </div>
+                  <div className="transaction-amount-details">
+                    <div className="transaction-amount-type">
+                      <span className="transaction-amount expense">
+                        -{Math.abs(item.amount).toFixed(2)}
+                        <span className="currency-suffix"> TND</span>
+                      </span>
+                    </div>
+                  </div>
+                  {/* No actions for summary items */}
+                </li>
+              );
+            }
+            
+            // --- Render Individual Transaction Item (existing logic) ---
+            const transaction = item; // Treat item as a transaction now
             const categoryDetails = getCategoryDetails(transaction.categoryId);
             
             // Date Formatting

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { getTransactions, getCategories, addTransaction, addCategory, generateId, removeNullIdCategories } from '../services/localStorageService'; // Added addTransaction, addCategory, generateId, removeNullIdCategories
+import { getTransactions, getCategories, addTransaction, addCategory, generateId } from '../services/localStorageService'; // Added addTransaction, addCategory, generateId
 
 // Import components to be rendered on this page
 import CategoryManager from '../components/CategoryManager';
@@ -18,19 +18,6 @@ function SettingsPage(props) {
     // appRefreshKey, // CategoryManager handles its own data loading, but uses onCategoryUpdated for global effect
     // other global props if needed
   } = props;
-
-  const handleCleanCorruptedCategories = () => {
-    try {
-      const result = removeNullIdCategories();
-      alert(`Cleanup attempted. Categories removed: ${result.removedCount}. Remaining: ${result.remainingCount}.`);
-      if (onCategoryUpdated) {
-        onCategoryUpdated(); // Refresh the category list in CategoryManager
-      }
-    } catch (error) {
-      console.error("Error during category cleanup:", error);
-      alert("An error occurred during cleanup. Check console.");
-    }
-  };
 
   const handleExportTransactions = () => {
     const transactions = getTransactions();
@@ -91,20 +78,17 @@ function SettingsPage(props) {
   };
 
   return (
-    <div className="settings-page-card"> {/* Main card container */}
-      {/* Title Container with Logo */}
-      <div className="settings-page-title-container">
-        <img src={appLogo} alt="App Logo" className="settings-page-logo" />
-        <h2>Settings</h2>
-      </div>
+    <div 
+      className="page-container" 
+      style={{ padding: '1rem' }}
+    >
+      <h2 style={{ marginBottom: '1.5rem' }}>Settings</h2>
 
-      {/* CategoryManager will now live inside this card styling */}
-      {/* Its own h3/h4 titles will be styled by CategoryManager.css to fit */}
       <CategoryManager 
         onCategoryUpdated={onCategoryUpdated} 
       />
 
-      <div className="data-management-section">
+      {/* <div className="data-management-section">
         <h3>Data Management</h3>
         
         <div className="data-management-action">
@@ -115,16 +99,7 @@ function SettingsPage(props) {
           </button>
         </div>
 
-        {/* Temporary button for cleaning corrupted categories */}
-        <div className="data-management-action" style={{ marginTop: '20px', borderTop: '1px solid #444', paddingTop: '20px' }}>
-          <h4>Clean Up Categories</h4>
-          <p>Attempt to remove categories that have corrupted (null) IDs. Use if you see categories highlighted in blue or with duplicate key warnings.</p>
-          <button onClick={handleCleanCorruptedCategories} className="btn btn-warning">
-            Clean Corrupted Categories
-          </button>
-        </div>
-
-      </div>
+      </div> */}
       
       {/* Placeholder for other settings like Dark Mode toggle, etc. */}
       {/* 

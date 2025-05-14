@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
+// Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; 
 import { getCategories, addCategory, updateCategory, deleteCategory as deleteCategoryService } from '../services/localStorageService';
 import './CategoryManager.css'; // Import the new CSS file
 
 function CategoryManager({ onCategoryUpdated }) {
-  const [categories, setCategories] = useState([]);
+  // Remove categories state and related logic for displaying the list
+  // const [categories, setCategories] = useState([]); 
   const [newCategoryName, setNewCategoryName] = useState('');
-  const [newCategoryType, setNewCategoryType] = useState('expense'); // Default to expense
-  const [newCategoryColor, setNewCategoryColor] = useState('#000000'); // Default to black
-  const [newCategoryEmoji, setNewCategoryEmoji] = useState(''); // State for emoji
+  const [newCategoryType, setNewCategoryType] = useState('expense');
+  const [newCategoryColor, setNewCategoryColor] = useState('#000000');
+  const [newCategoryEmoji, setNewCategoryEmoji] = useState('');
   const [error, setError] = useState('');
   
-  // State for tracking the category being edited
+  // Editing state remains as the form can still be used for editing if invoked that way
+  // but for this simplified version, we assume it's primarily for adding on SettingsPage.
+  // If SettingsPage passes an editingTransaction, this form could adapt, but that's not the current flow.
   const [editingCategoryId, setEditingCategoryId] = useState(null); 
+  // Remove isExistingCategoriesVisible state
+  // const [isExistingCategoriesVisible, setIsExistingCategoriesVisible] = useState(true);
 
+  const navigate = useNavigate(); // Hook for navigation
+
+  // useEffect to load categories is no longer needed here as the list is not displayed.
+  // The form itself might need categories for duplicate checking, so we load them in handleFormSubmit or on mount.
+  const [formCategories, setFormCategories] = useState([]);
   useEffect(() => {
-    loadCategoriesData();
+    setFormCategories(getCategories());
   }, []);
-
-  const loadCategoriesData = () => {
-    const loadedCategories = getCategories();
-    setCategories(loadedCategories);
-  };
 
   const resetForm = () => {
     setNewCategoryName('');
@@ -28,7 +35,7 @@ function CategoryManager({ onCategoryUpdated }) {
     setNewCategoryColor('#000000');
     setNewCategoryEmoji('');
     setError('');
-    setEditingCategoryId(null);
+    setEditingCategoryId(null); // Still useful to reset if form was hypothetically in edit mode
   };
 
   const handleFormSubmit = (e) => {
@@ -39,86 +46,70 @@ function CategoryManager({ onCategoryUpdated }) {
       return;
     }
 
-    // Adjust duplicate check for editing
     const trimmedNameLower = newCategoryName.trim().toLowerCase();
-    if (categories.some(cat => 
-        cat.name.toLowerCase() === trimmedNameLower && cat.id !== editingCategoryId // Exclude the category being edited
+    // Use formCategories for duplicate check
+    if (formCategories.some(cat => 
+        cat.name.toLowerCase() === trimmedNameLower && cat.id !== editingCategoryId
       )) {
       setError('A category with this name already exists.');
       return;
     }
 
     const categoryData = {
-      id: editingCategoryId, // Will be null if adding, contains ID if editing
+      // If this component were to handle editing, editingCategoryId would be used here.
+      // For now, assume SettingsPage uses it for adding only.
+      id: null, // Explicitly null for adding a new category via this simplified form
       name: newCategoryName.trim(),
       type: newCategoryType,
       color: newCategoryColor,
       emoji: newCategoryEmoji.trim(),
     };
 
+    // For this simplified form on SettingsPage, we primarily expect adding new categories.
+    // The editingCategoryId logic is kept in case this component is reused for editing elsewhere,
+    // but `SettingsPage` doesn't currently trigger an edit mode for this form.
     if (editingCategoryId) {
-      // Update existing category
-      const updated = updateCategory(categoryData);
-      if (!updated) {
-        setError('Failed to update category. Please try again.');
-        // Optionally, don't reset form if update fails
-        return; 
-      }
-      console.log('Category updated:', updated);
+      // This path would be taken if editingCategoryId was set (e.g. by a prop)
+      updateCategory({ ...categoryData, id: editingCategoryId });
     } else {
-      // Add new category (addCategory handles ID generation)
-      const added = addCategory(categoryData); // addCategory returns the new category
-      console.log('Category added:', added);
+      addCategory(categoryData); 
     }
 
-    resetForm(); // Reset form and editing state
-    loadCategoriesData(); // Re-load categories
+    resetForm();
+    setFormCategories(getCategories()); // Refresh categories for duplicate check
 
     if (onCategoryUpdated) {
-      onCategoryUpdated();
+      onCategoryUpdated(); // Notify App.jsx to trigger global refresh
     }
+    // Optionally, navigate to the manage page or show a success message.
+    // For now, just resets and allows adding another.
   };
 
-  // Function to populate form for editing
-  const handleEditCategoryClick = (category) => {
-    setEditingCategoryId(category.id);
-    setNewCategoryName(category.name);
-    setNewCategoryType(category.type);
-    setNewCategoryColor(category.color || '#000000');
-    setNewCategoryEmoji(category.emoji || '');
-    setError(''); // Clear any previous errors
-  };
-
-  const handleDeleteCategory = (categoryId) => {
-    if (window.confirm('Are you sure you want to delete this category? This might affect existing transactions using this category.')) {
-      // If deleting the category currently being edited, reset the form
-      if (categoryId === editingCategoryId) {
-        resetForm();
-      }
-      
-      const success = deleteCategoryService(categoryId);
-      if (success) {
-        console.log('Category deleted:', categoryId);
-        loadCategoriesData();
-        if (onCategoryUpdated) {
-          onCategoryUpdated();
-        }
-      } else {
-        console.warn('Failed to delete category:', categoryId);
-        setError('Failed to delete category.');
-      }
-    }
-  };
+  // Remove handleEditCategoryClick and handleDeleteCategory as list is gone
 
   return (
-    // The main container class will be applied by SettingsPage to wrap this and Data Management
-    // For standalone use, or if SettingsPage doesn't provide a card, this could be .category-manager-card
-    <div className="category-manager-component"> {/* Changed from category-manager-container to avoid conflict if nested */} 
-      {/* Title for the whole manager, if SettingsPage doesn't provide a more global one */}
-      {/* <h3>Manage Categories</h3> */}
-      
-      <form onSubmit={handleFormSubmit} className="add-category-form">
-        <h4>{editingCategoryId ? 'Edit Category' : 'Add New Category'}</h4>
+    <div className="category-manager-component">
+      <form onSubmit={handleFormSubmit} className="add-category-form" style={{ position: 'relative' }}>
+        {/* Removed <h4>Add New Category</h4> */}
+        
+        {/* Icon to navigate to Manage Categories page */}
+        <span 
+          onClick={() => navigate('/manage-categories')}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            fontSize: '0.8rem', // Reduced size
+            cursor: 'pointer',
+            padding: '5px' // Add some padding for easier clicking
+          }}
+          title="Manage Existing Categories" // Tooltip for accessibility
+          role="button" // Accessibility role
+          aria-label="Manage Existing Categories"
+        >
+          ▼ {/* Changed to Dropdown/chevron icon */}
+        </span>
+
         {error && <p className="category-form-error">{error}</p>}
         <div className="form-group">
           <label htmlFor="newCatName">Name:</label>
@@ -163,59 +154,24 @@ function CategoryManager({ onCategoryUpdated }) {
         </div>
         <div className="form-actions">
           <button type="submit" className="btn btn-primary">
-            {editingCategoryId ? 'Update Category' : 'Add Category'}
+            Add Category
           </button>
-          {editingCategoryId && (
-            <button type="button" onClick={resetForm} className="btn btn-secondary">
-              Cancel Edit
-            </button>
-          )}
+          {/* Remove Cancel Edit button as edit mode isn't initiated from SettingsPage directly */}
         </div>
       </form>
 
-      <div className="existing-categories-section">
-        <h4>Existing Categories</h4>
-        {categories.length === 0 ? (
-          <p className="no-categories-message">No categories defined yet.</p>
-        ) : (
-          <div className="category-list-scroll-container">
-            <ul className="existing-categories-list">
-              {categories.map(category => {
-                console.log('[CategoryManager] Rendering category:', category.name, 'ID:', category.id, 'Type of ID:', typeof category.id, 'Current editingCategoryId:', editingCategoryId, 'Type of editingCategoryId:', typeof editingCategoryId);
-                return (
-                  <li key={category.id} className={`category-item ${category.id === editingCategoryId ? 'editing' : ''}`}>
-                    <div className="category-info">
-                      <span 
-                        className="category-color-swatch"
-                        style={{ backgroundColor: category.color || '#ccc' }}
-                      ></span>
-                      {category.emoji && <span className="category-emoji">{category.emoji}</span>}
-                      <span className="category-name">{category.name}</span>
-                      <span className="category-type">({category.type})</span>
-                    </div>
-                    <div className="category-actions">
-                      <button 
-                        onClick={() => handleEditCategoryClick(category)} 
-                        className="btn btn-secondary btn-sm btn-edit" 
-                        disabled={editingCategoryId === category.id}
-                      >
-                        Edit
-                      </button>
-                      <button 
-                        onClick={() => handleDeleteCategory(category.id)} 
-                        className="btn btn-danger btn-sm"
-                        disabled={editingCategoryId === category.id}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
-      </div>
+      {/* Removed the text button to navigate to the Manage Categories page */}
+      {/* 
+      <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+        <button 
+          type="button" 
+          onClick={() => navigate('/manage-categories')} 
+          className="btn btn-link"
+        >
+          View & Manage Existing Categories
+        </button>
+      </div> 
+      */}
     </div>
   );
 }

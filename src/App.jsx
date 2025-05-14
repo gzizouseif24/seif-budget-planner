@@ -9,6 +9,8 @@ import TransactionsPage from './pages/TransactionsPage'; // Re-import the new pa
 import BudgetsPage from './pages/BudgetsPage';
 // import ReportsPage from './pages/ReportsPage'; // REMOVED IMPORT
 import SettingsPage from './pages/SettingsPage';
+// Import the new ManageCategoriesPage
+import ManageCategoriesPage from './pages/ManageCategoriesPage';
 
 // Import Common Components
 import Header from './components/Header'; // Import the new Header
@@ -118,6 +120,8 @@ function App() {
           <Route path="/budgets" element={<BudgetsPage {...globalProps} />} />
           {/* <Route path="/reports" element={<ReportsPage {...globalProps} />} /> REMOVED ROUTE */}
           <Route path="/settings" element={<SettingsPage {...globalProps} />} />
+          {/* Add route for ManageCategoriesPage */}
+          <Route path="/manage-categories" element={<ManageCategoriesPage {...globalProps} />} />
           <Route path="*" element={<DashboardPage {...globalProps} />} />
         </Routes>
       </div>
