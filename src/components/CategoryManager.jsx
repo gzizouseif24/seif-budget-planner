@@ -180,35 +180,38 @@ function CategoryManager({ onCategoryUpdated }) {
         ) : (
           <div className="category-list-scroll-container">
             <ul className="existing-categories-list">
-              {categories.map(category => (
-                <li key={category.id} className={`category-item ${category.id === editingCategoryId ? 'editing' : ''}`}>
-                  <div className="category-info">
-                    <span 
-                      className="category-color-swatch"
-                      style={{ backgroundColor: category.color || '#ccc' }}
-                    ></span>
-                    {category.emoji && <span className="category-emoji">{category.emoji}</span>}
-                    <span className="category-name">{category.name}</span>
-                    <span className="category-type">({category.type})</span>
-                  </div>
-                  <div className="category-actions">
-                    <button 
-                      onClick={() => handleEditCategoryClick(category)} 
-                      className="btn btn-secondary btn-sm btn-edit" 
-                      disabled={editingCategoryId === category.id}
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteCategory(category.id)} 
-                      className="btn btn-danger btn-sm"
-                      disabled={editingCategoryId === category.id}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
+              {categories.map(category => {
+                console.log('[CategoryManager] Rendering category:', category.name, 'ID:', category.id, 'Type of ID:', typeof category.id, 'Current editingCategoryId:', editingCategoryId, 'Type of editingCategoryId:', typeof editingCategoryId);
+                return (
+                  <li key={category.id} className={`category-item ${category.id === editingCategoryId ? 'editing' : ''}`}>
+                    <div className="category-info">
+                      <span 
+                        className="category-color-swatch"
+                        style={{ backgroundColor: category.color || '#ccc' }}
+                      ></span>
+                      {category.emoji && <span className="category-emoji">{category.emoji}</span>}
+                      <span className="category-name">{category.name}</span>
+                      <span className="category-type">({category.type})</span>
+                    </div>
+                    <div className="category-actions">
+                      <button 
+                        onClick={() => handleEditCategoryClick(category)} 
+                        className="btn btn-secondary btn-sm btn-edit" 
+                        disabled={editingCategoryId === category.id}
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteCategory(category.id)} 
+                        className="btn btn-danger btn-sm"
+                        disabled={editingCategoryId === category.id}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}

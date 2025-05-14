@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { getTransactions, getCategories, addTransaction, addCategory, generateId } from '../services/localStorageService'; // Added addTransaction, addCategory, generateId
+import { getTransactions, getCategories, addTransaction, addCategory, generateId, removeNullIdCategories } from '../services/localStorageService'; // Added addTransaction, addCategory, generateId, removeNullIdCategories
 
 // Import components to be rendered on this page
 import CategoryManager from '../components/CategoryManager';
@@ -18,6 +18,19 @@ function SettingsPage(props) {
     // appRefreshKey, // CategoryManager handles its own data loading, but uses onCategoryUpdated for global effect
     // other global props if needed
   } = props;
+
+  const handleCleanCorruptedCategories = () => {
+    try {
+      const result = removeNullIdCategories();
+      alert(`Cleanup attempted. Categories removed: ${result.removedCount}. Remaining: ${result.remainingCount}.`);
+      if (onCategoryUpdated) {
+        onCategoryUpdated(); // Refresh the category list in CategoryManager
+      }
+    } catch (error) {
+      console.error("Error during category cleanup:", error);
+      alert("An error occurred during cleanup. Check console.");
+    }
+  };
 
   const handleExportTransactions = () => {
     const transactions = getTransactions();
@@ -99,6 +112,15 @@ function SettingsPage(props) {
           <p>Download all your transaction data as a CSV file.</p>
           <button onClick={handleExportTransactions} className="btn btn-secondary">
             Export Transactions
+          </button>
+        </div>
+
+        {/* Temporary button for cleaning corrupted categories */}
+        <div className="data-management-action" style={{ marginTop: '20px', borderTop: '1px solid #444', paddingTop: '20px' }}>
+          <h4>Clean Up Categories</h4>
+          <p>Attempt to remove categories that have corrupted (null) IDs. Use if you see categories highlighted in blue or with duplicate key warnings.</p>
+          <button onClick={handleCleanCorruptedCategories} className="btn btn-warning">
+            Clean Corrupted Categories
           </button>
         </div>
 

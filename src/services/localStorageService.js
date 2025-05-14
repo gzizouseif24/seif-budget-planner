@@ -227,9 +227,11 @@ export const getCategories = () => {
  */
 export const addCategory = (categoryData) => {
   const categories = getCategories();
+  // Destructure id from categoryData and keep the rest
+  const { id: inputId, ...restOfCategoryData } = categoryData;
   const newCategory = {
-    id: categoryData.id || generateId(), // Allow pre-defined IDs or generate new
-    ...categoryData,
+    ...restOfCategoryData, // Spread the properties other than id first
+    id: inputId || generateId(), // Then set the id, ensuring generateId() is used for new items
   };
   categories.push(newCategory);
   saveToLocalStorage(CATEGORIES_KEY, categories);
@@ -275,6 +277,29 @@ export const deleteCategory = (categoryId) => {
   }
   console.warn('Category not found for deletion:', categoryId);
   return false;
+};
+
+// --- Function to remove categories with null IDs ---
+export const removeNullIdCategories = () => {
+  console.log('[LS_Service] removeNullIdCategories - Starting cleanup.');
+  let categories = loadFromLocalStorage(CATEGORIES_KEY, []); // Load raw categories
+  if (!categories || categories.length === 0) {
+    console.log('[LS_Service] removeNullIdCategories - No categories found or array is empty.');
+    return { removedCount: 0, remainingCount: 0 };
+  }
+
+  const initialCount = categories.length;
+  const validCategories = categories.filter(category => category.id !== null && typeof category.id !== 'undefined');
+  const removedCount = initialCount - validCategories.length;
+
+  if (removedCount > 0) {
+    console.log(`[LS_Service] removeNullIdCategories - Found ${removedCount} categories with null IDs. Removing them.`);
+    saveToLocalStorage(CATEGORIES_KEY, validCategories);
+    console.log('[LS_Service] removeNullIdCategories - Cleanup successful. Remaining categories:', validCategories.length);
+  } else {
+    console.log('[LS_Service] removeNullIdCategories - No categories with null IDs found.');
+  }
+  return { removedCount, remainingCount: validCategories.length };
 };
 
 // --- Budget Specific Functions ---
