@@ -1,5 +1,7 @@
 # Seif Budget Planner
 
+https://gzizouseif24.github.io/seif-budget-planner/#/
+
 This project is a personal budgeting application built with React and Vite. It helps users track income and expenses, manage categories, set budgets, and visualize their financial data.
 
 ## Core Technologies
