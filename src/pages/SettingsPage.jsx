@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { getTransactions, getCategories, addTransaction, addCategory, generateId } from '../services/localStorageService'; // Added addTransaction, addCategory, generateId
 
 // Import components to be rendered on this page
-import CategoryManager from '../components/CategoryManager';
+import CurrencyToggle from '../components/CurrencyToggle';
+import CategoryListModal from '../components/CategoryListModal';
+import AddCategoryModal from '../components/AddCategoryModal';
 import './SettingsPage.css'; // Import the new CSS file
 
 // Import the logo
@@ -18,6 +20,9 @@ function SettingsPage(props) {
     // appRefreshKey, // CategoryManager handles its own data loading, but uses onCategoryUpdated for global effect
     // other global props if needed
   } = props;
+
+  const [isCategoryListOpen, setIsCategoryListOpen] = useState(false);
+  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
 
   const handleExportTransactions = () => {
     const transactions = getTransactions();
@@ -84,8 +89,38 @@ function SettingsPage(props) {
     >
       <h2 style={{ marginBottom: '1.5rem' }}>Settings</h2>
 
-      <CategoryManager 
-        onCategoryUpdated={onCategoryUpdated} 
+      <CurrencyToggle />
+
+      <div className="settings-section">
+        <h3 className="settings-section-title">Categories</h3>
+        
+        <button 
+          className="settings-button"
+          onClick={() => setIsCategoryListOpen(true)}
+        >
+          <span>Manage Categories</span>
+          <span className="settings-button-arrow">›</span>
+        </button>
+
+        <button 
+          className="settings-button"
+          onClick={() => setIsAddCategoryOpen(true)}
+        >
+          <span>Add New Category</span>
+          <span className="settings-button-arrow">›</span>
+        </button>
+      </div>
+
+      <CategoryListModal 
+        isOpen={isCategoryListOpen}
+        onClose={() => setIsCategoryListOpen(false)}
+        onCategoryUpdated={onCategoryUpdated}
+      />
+
+      <AddCategoryModal 
+        isOpen={isAddCategoryOpen}
+        onClose={() => setIsAddCategoryOpen(false)}
+        onCategoryAdded={onCategoryUpdated}
       />
 
       {/* <div className="data-management-section">

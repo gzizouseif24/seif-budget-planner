@@ -7,7 +7,6 @@ import DashboardSummary from '../components/DashboardSummary';
 import BudgetProgressSummary from '../components/BudgetProgressSummary';
 import RecentTransactionsList from '../components/RecentTransactionsList';
 import TransactionModal from '../components/TransactionModal'; // Import the modal
-import CurrencySwitcher from '../components/CurrencySwitcher'; // Import CurrencySwitcher
 import './DashboardPage.css'; // Import the CSS file
 
 // Import styles for this page if any (optional, or use global styles)
@@ -47,8 +46,6 @@ function DashboardPage(props) {
   return (
     <div className="dashboard-page-container">
       <h1 className="dashboard-title">Budget for {displayMonth}</h1>
-
-      <CurrencySwitcher />
 
       <div className="add-transaction-button-container">
         <button

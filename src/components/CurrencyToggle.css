@@ -1,0 +1,71 @@
+.currency-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--card-bg, #2a2a2a);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.currency-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #ffffff);
+}
+
+.currency-toggle-switch-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.currency-option {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary, #888);
+  transition: color 0.2s ease;
+}
+
+.currency-option.active {
+  color: var(--text-primary, #ffffff);
+}
+
+.toggle-switch {
+  position: relative;
+  width: 51px;
+  height: 31px;
+  background: #3a3a3a;
+  border: none;
+  border-radius: 31px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0;
+}
+
+.toggle-switch:hover {
+  background: #444;
+}
+
+.toggle-switch.toggled {
+  background: var(--primary-color, #4ade80);
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.toggled .toggle-slider {
+  transform: translateX(20px);
+}
