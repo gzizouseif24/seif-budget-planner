@@ -3,12 +3,14 @@ import {
   calculateTotalIncomeForPeriod,
   calculateTotalExpensesForPeriod,
 } from '../services/budgetUtils';
+import { useCurrency } from '../context/CurrencyContext';
 import './DashboardSummary.css';
 
 // Component now receives currentMonthPeriod directly from DashboardPage
-function DashboardSummary({ appRefreshKey, currentMonthPeriod }) { 
+function DashboardSummary({ appRefreshKey, currentMonthPeriod }) {
   const [summaryData, setSummaryData] = useState({ totalIncome: 0, totalExpenses: 0 });
   const [loading, setLoading] = useState(true);
+  const { formatAmount, getCurrencySymbol } = useCurrency();
 
   // Removed useEffect that was setting currentMonthPeriod locally as it's now a prop
 
@@ -49,15 +51,15 @@ function DashboardSummary({ appRefreshKey, currentMonthPeriod }) {
           <div className="summary-detail-item summary-expenses-small">
             <span className="summary-label-small">TOTAL EXPENSES</span>
             <p className="amount-small expense-amount">
-              {summaryData.totalExpenses.toFixed(2)}
-              <span className="currency-suffix"> TND</span>
+              {formatAmount(summaryData.totalExpenses)}
+              <span className="currency-suffix"> {getCurrencySymbol()}</span>
             </p>
           </div>
           <div className="summary-detail-item summary-income-small">
             <span className="summary-label-small">TOTAL INCOME</span>
             <p className="amount-small income-amount">
-              {summaryData.totalIncome.toFixed(2)}
-              <span className="currency-suffix"> TND</span>
+              {formatAmount(summaryData.totalIncome)}
+              <span className="currency-suffix"> {getCurrencySymbol()}</span>
             </p>
           </div>
         </div>
@@ -65,8 +67,8 @@ function DashboardSummary({ appRefreshKey, currentMonthPeriod }) {
         <div className="summary-remaining-balance">
           <span className="summary-label-large">REMAINING MONEY</span>
           <p className={`amount-large ${balanceColorClass}`}>
-            {remainingBalance.toFixed(2)}
-            <span className="currency-suffix"> TND</span>
+            {formatAmount(remainingBalance)}
+            <span className="currency-suffix"> {getCurrencySymbol()}</span>
           </p>
         </div>
       </div>

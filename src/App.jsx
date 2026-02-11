@@ -16,6 +16,9 @@ import ManageCategoriesPage from './pages/ManageCategoriesPage';
 import Header from './components/Header'; // Import the new Header
 import BottomNavigationBar from './components/BottomNavigationBar';
 
+// Import Currency Context
+import { CurrencyProvider } from './context/CurrencyContext';
+
 // Temporarily importing components that might be needed by pages or for context later
 // We will relocate these properly into their respective page components soon.
 import TransactionForm from './components/TransactionForm';
@@ -110,23 +113,25 @@ function App() {
   };
   
   return (
-    <Router>
-      {/* <Header /> Display Header on all pages - REMOVED FOR PAGE-SPECIFIC TITLES */}
-      <div className="main-content-area" style={{ paddingTop: '1rem', paddingBottom: '80px' }}> {/* Adjusted padding */}
-        <Routes>
-          <Route path="/" element={<DashboardPage {...globalProps} />} />
-          {/* Add the route for the transactions page */}
-          <Route path="/transactions" element={<TransactionsPage {...globalProps} />} /> 
-          <Route path="/budgets" element={<BudgetsPage {...globalProps} />} />
-          {/* <Route path="/reports" element={<ReportsPage {...globalProps} />} /> REMOVED ROUTE */}
-          <Route path="/settings" element={<SettingsPage {...globalProps} />} />
-          {/* Add route for ManageCategoriesPage */}
-          <Route path="/manage-categories" element={<ManageCategoriesPage {...globalProps} />} />
-          <Route path="*" element={<DashboardPage {...globalProps} />} />
-        </Routes>
-      </div>
-      <BottomNavigationBar isModalOpen={isTransactionModalOpen} /> {/* Pass modal state */}
-    </Router>
+    <CurrencyProvider>
+      <Router>
+        {/* <Header /> Display Header on all pages - REMOVED FOR PAGE-SPECIFIC TITLES */}
+        <div className="main-content-area" style={{ paddingTop: '1rem', paddingBottom: '80px' }}> {/* Adjusted padding */}
+          <Routes>
+            <Route path="/" element={<DashboardPage {...globalProps} />} />
+            {/* Add the route for the transactions page */}
+            <Route path="/transactions" element={<TransactionsPage {...globalProps} />} />
+            <Route path="/budgets" element={<BudgetsPage {...globalProps} />} />
+            {/* <Route path="/reports" element={<ReportsPage {...globalProps} />} /> REMOVED ROUTE */}
+            <Route path="/settings" element={<SettingsPage {...globalProps} />} />
+            {/* Add route for ManageCategoriesPage */}
+            <Route path="/manage-categories" element={<ManageCategoriesPage {...globalProps} />} />
+            <Route path="*" element={<DashboardPage {...globalProps} />} />
+          </Routes>
+        </div>
+        <BottomNavigationBar isModalOpen={isTransactionModalOpen} /> {/* Pass modal state */}
+      </Router>
+    </CurrencyProvider>
   );
 }
 

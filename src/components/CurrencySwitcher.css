@@ -1,0 +1,45 @@
+.currency-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem;
+}
+
+.currency-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.currency-button:hover {
+  background-color: #f0f7ff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+}
+
+.currency-button.active {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.currency-button.active:hover {
+  background-color: #357abd;
+}
+
+.currency-label {
+  color: inherit;
+  font-weight: 400;
+}
+
+.currency-value {
+  font-weight: 600;
+  font-size: 1rem;
+}

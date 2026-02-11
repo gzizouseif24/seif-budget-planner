@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCategories, saveBudget, getBudgets } from '../services/localStorageService';
+import { useCurrency } from '../context/CurrencyContext';
 import './BudgetForm.css';
 
 function BudgetForm({ isOpen, onClose, onBudgetSubmit, existingBudget, currentMonthPeriod }) {
@@ -8,6 +9,7 @@ function BudgetForm({ isOpen, onClose, onBudgetSubmit, existingBudget, currentMo
   const [amount, setAmount] = useState('');
   const [currentBudgets, setCurrentBudgets] = useState({}); // Store existing budgets {categoryId: amount}
   const [error, setError] = useState('');
+  const { getCurrencySymbol } = useCurrency();
 
   const isEditing = Boolean(existingBudget);
 
@@ -114,16 +116,16 @@ function BudgetForm({ isOpen, onClose, onBudgetSubmit, existingBudget, currentMo
             }
           </div>
           <div className="form-group">
-            <label htmlFor="amount">Budget Amount <span className="currency-suffix">(TND)</span></label>
-            <input 
-              type="number" 
-              id="amount" 
+            <label htmlFor="amount">Budget Amount <span className="currency-suffix">({getCurrencySymbol()})</span></label>
+            <input
+              type="number"
+              id="amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="e.g., 500"
-              min="0.01" 
+              min="0.01"
               step="0.01"
-              required 
+              required
             />
           </div>
           <div className="form-actions">
