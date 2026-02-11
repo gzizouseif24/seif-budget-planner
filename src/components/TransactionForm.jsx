@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { addTransaction, getCategories, updateTransaction } from '../services/localStorageService';
+import { useCurrency } from '../context/CurrencyContext';
 
 function TransactionForm({ onTransactionSubmit, existingTransaction }) {
   const [date, setDate] = useState('');
@@ -9,6 +10,7 @@ function TransactionForm({ onTransactionSubmit, existingTransaction }) {
   const [note, setNote] = useState('');
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState('');
+  const { getCurrencySymbol } = useCurrency();
 
   const isEditing = !!existingTransaction;
 
@@ -143,7 +145,7 @@ function TransactionForm({ onTransactionSubmit, existingTransaction }) {
       </div>
 
       <div className="form-group amount-group">
-        <label htmlFor="amount">Amount <span className="currency-suffix">(TND)</span></label>
+        <label htmlFor="amount">Amount <span className="currency-suffix">({getCurrencySymbol()})</span></label>
         <input type="number" id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" step="0.01" required />
       </div>
 

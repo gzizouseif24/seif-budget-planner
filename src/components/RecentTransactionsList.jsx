@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getTransactions, getCategories } from '../services/localStorageService';
+import { useCurrency } from '../context/CurrencyContext';
 import './RecentTransactionsList.css'; // We'll create this CSS file next
 
 function RecentTransactionsList({ numberOfTransactionsToShow = 3, onEditTransaction, onDeleteTransaction, appRefreshKey }) {
   const [recentTransactions, setRecentTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
+  const { formatAmount, getCurrencySymbol } = useCurrency();
 
   useEffect(() => {
     console.log(`[RecentTransactionsList] useEffect triggered. appRefreshKey: ${appRefreshKey}, numberOfTransactionsToShow: ${numberOfTransactionsToShow}`);
@@ -76,8 +78,8 @@ function RecentTransactionsList({ numberOfTransactionsToShow = 3, onEditTransact
               </div>
               <div className="transaction-amount">
                 <span className={`transaction-amount ${transaction.type}`}>
-                  {transaction.type === 'income' ? '+' : '-'}{Math.abs(transaction.amount).toFixed(2)}
-                  <span className="currency-suffix"> TND</span>
+                  {transaction.type === 'income' ? '+' : '-'}{formatAmount(Math.abs(transaction.amount))}
+                  <span className="currency-suffix"> {getCurrencySymbol()}</span>
                 </span>
               </div>
               <button onClick={handleDelete} className="delete-transaction-btn" aria-label="Delete transaction">

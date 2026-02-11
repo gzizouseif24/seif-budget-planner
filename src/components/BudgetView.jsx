@@ -5,6 +5,7 @@ import {
   getBudgetForCategoryAndPeriod,
 } from '../services/localStorageService';
 import { calculateActualSpending } from '../services/budgetUtils';
+import { useCurrency } from '../context/CurrencyContext';
 
 // Updated ProgressBar component using CSS classes
 const ProgressBar = ({ value, max, color }) => {
@@ -32,6 +33,7 @@ function BudgetView({ appRefreshKey, onEditBudget }) {
   const [categoriesMap, setCategoriesMap] = useState({}); // Store categories by ID for easy lookup
   const [currentMonthPeriod, setCurrentMonthPeriod] = useState('');
   const [loading, setLoading] = useState(true);
+  const { formatAmount, getCurrencySymbol } = useCurrency();
 
   useEffect(() => {
     const now = new Date();
@@ -113,9 +115,10 @@ function BudgetView({ appRefreshKey, onEditBudget }) {
                  statusTextColor = 'var(--accent-color-green)';
             }
             
-            const budgetAmountDisplay = typeof detail.budgetAmount === 'number' ? detail.budgetAmount.toFixed(2) : '0.00';
-            const actualSpendingDisplay = typeof detail.actualSpending === 'number' ? detail.actualSpending.toFixed(2) : '0.00';
-            const remainingAmountDisplay = typeof detail.remainingAmount === 'number' ? Math.abs(detail.remainingAmount).toFixed(2) : '0.00';
+            const budgetAmountDisplay = typeof detail.budgetAmount === 'number' ? formatAmount(detail.budgetAmount) : '0.00';
+            const actualSpendingDisplay = typeof detail.actualSpending === 'number' ? formatAmount(detail.actualSpending) : '0.00';
+            const remainingAmountDisplay = typeof detail.remainingAmount === 'number' ? formatAmount(Math.abs(detail.remainingAmount)) : '0.00';
+            const currencySymbol = getCurrencySymbol();
 
             const handleEditClick = () => {
               if (onEditBudget) {
@@ -134,14 +137,14 @@ function BudgetView({ appRefreshKey, onEditBudget }) {
                   </strong>
                   <span className={`status-text ${statusClass}`} style={{ color: statusTextColor }}>
                     {isOverBudget ? 'Overspent' : 'Remaining'}: {remainingAmountDisplay}
-                    <span className="currency-suffix"> TND</span>
+                    <span className="currency-suffix"> {currencySymbol}</span>
                   </span>
                 </div>
                 <ProgressBar value={detail.actualSpending} max={detail.budgetAmount} color={progressBarColor} />
                 <div className="budget-item-details">
-                  <span>Budget: {budgetAmountDisplay}<span className="currency-suffix"> TND</span></span>
-                  <span>Spent: {actualSpendingDisplay}<span className="currency-suffix"> TND</span></span>
-                  {/* Add Edit Button */} 
+                  <span>Budget: {budgetAmountDisplay}<span className="currency-suffix"> {currencySymbol}</span></span>
+                  <span>Spent: {actualSpendingDisplay}<span className="currency-suffix"> {currencySymbol}</span></span>
+                  {/* Add Edit Button */}
                   <button onClick={handleEditClick} className="btn btn-secondary btn-sm edit-budget-btn" disabled={!onEditBudget}>
                     Edit
                   </button>

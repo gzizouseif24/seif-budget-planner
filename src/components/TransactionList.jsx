@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getTransactions, getCategories } from '../services/localStorageService';
+import { useCurrency } from '../context/CurrencyContext';
 import './TransactionList.css'; // Import the new CSS file
 
 // Accept the handlers as props now
@@ -11,6 +12,7 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
   const [filterCategory, setFilterCategory] = useState('all'); // 'all' or category.id
   // Add state for the processed list that will include daily summaries
   const [displayItems, setDisplayItems] = useState([]);
+  const { formatAmount, getCurrencySymbol } = useCurrency();
 
   useEffect(() => {
     const loadData = () => {
@@ -192,8 +194,8 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
                   <div className="transaction-amount-details">
                     <div className="transaction-amount-type">
                       <span className="transaction-amount expense">
-                        -{Math.abs(item.amount).toFixed(2)}
-                        <span className="currency-suffix"> TND</span>
+                        -{formatAmount(Math.abs(item.amount))}
+                        <span className="currency-suffix"> {getCurrencySymbol()}</span>
                       </span>
                     </div>
                   </div>
@@ -246,8 +248,8 @@ function TransactionList({ onEditTransaction, onDeleteTransaction, appRefreshKey
                 <div className="transaction-amount-details">
                   <div className="transaction-amount-type">
                     <span className={`transaction-amount ${transaction.type === 'income' ? 'income' : 'expense'}`}>
-                      {transaction.type === 'expense' ? '-' : '+'}{Math.abs(transaction.amount).toFixed(2)}
-                      <span className="currency-suffix"> TND</span>
+                      {transaction.type === 'expense' ? '-' : '+'}{formatAmount(Math.abs(transaction.amount))}
+                      <span className="currency-suffix"> {getCurrencySymbol()}</span>
                     </span>
                     <span className="type">({transaction.type})</span>
                   </div>

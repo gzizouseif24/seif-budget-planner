@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getOverallBudgetSummary } from '../services/budgetUtils';
+import { useCurrency } from '../context/CurrencyContext';
 import './BudgetProgressSummary.css'; // Import the new CSS file
 
 function BudgetProgressSummary({ appRefreshKey, currentMonthPeriod }) {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { formatAmount, getCurrencySymbol } = useCurrency();
 
   useEffect(() => {
     if (!currentMonthPeriod) return;
@@ -30,16 +32,17 @@ function BudgetProgressSummary({ appRefreshKey, currentMonthPeriod }) {
     : 'var(--accent-color-green)';
 
   // Format the text to show spent / budgeted
-  const spentText = summary.totalSpentOnBudgetedCategories.toFixed(2);
-  const budgetText = summary.totalBudgeted.toFixed(2);
-  const barText = `${spentText} TND / ${budgetText} TND`;
+  const spentText = formatAmount(summary.totalSpentOnBudgetedCategories);
+  const budgetText = formatAmount(summary.totalBudgeted);
+  const currencySymbol = getCurrencySymbol();
+  const barText = `${spentText} ${currencySymbol} / ${budgetText} ${currencySymbol}`;
 
   return (
     <div className="budget-planner-summary-card">
       {/*<h4>Budget Planner ({currentMonthPeriod})</h4>*/}
       
       <p className="budget-meter-label">
-        Total Budget = {budgetText} <span className="currency-suffix">TND</span>
+        Total Budget = {budgetText} <span className="currency-suffix">{currencySymbol}</span>
       </p>
       
       <div className="overall-progress-bar-container">
