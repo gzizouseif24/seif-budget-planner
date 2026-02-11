@@ -32,12 +32,12 @@ const CategoryListModal = ({ isOpen, onClose, onCategoryUpdated, onEditCategory 
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content category-list-modal" onClick={(e) => e.stopPropagation()} style={{ position: 'relative' }}>
-        <button className="modal-close-btn" onClick={onClose} style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 100, background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '0.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '6px' }}>
-          <X size={20} />
-        </button>
+      <div className="modal-content category-list-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>Manage Categories</h3>
+          <button className="modal-close-btn" onClick={onClose}>
+            <X size={20} />
+          </button>
         </div>
         
         <div className="modal-body">
