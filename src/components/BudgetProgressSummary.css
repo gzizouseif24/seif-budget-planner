@@ -1,0 +1,55 @@
+/* Styles for BudgetProgressSummary.jsx */
+.budget-planner-summary-card {
+  background-color: var(--container-background);
+  padding: 1rem; /* Reduced padding */
+  border-radius: var(--border-radius);
+  margin: 1rem 0; /* Reduced margin */
+  color: var(--text-color-primary);
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+/* NEW: Style for the 'Budget Meter' label */
+.budget-meter-label {
+  font-size: 0.9rem; /* Small label */
+  font-weight: 500;
+  color: var(--text-color-secondary);
+  margin-top: 0;
+  margin-bottom: 0.75rem; /* Space before progress bar */
+}
+
+.overall-progress-bar-container {
+  height: 22px; /* Increased height */
+  width: 100%;
+  background-color: #383838;
+  border-radius: 8px; /* Optional: adjust radius slightly */
+  overflow: hidden;
+  margin-top: 0; /* Removed top margin as label provides space */
+}
+
+.overall-progress-bar-fill {
+  height: 100%; /* Inherit height from container */
+  /* background-color: var(--accent-color-green); REMOVED - Set dynamically */
+  border-radius: inherit; /* Match container's radius */
+  transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out; /* Added transition for color */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text horizontally */
+  color: white;
+  font-weight: 500; /* Slightly less bold */
+  font-size: 0.85em; /* Slightly larger font for taller bar */
+  line-height: 18px; /* Match container height */
+  overflow: hidden; /* Hide text if bar is too narrow */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.loading-message-budget-summary,
+.no-budget-message-summary {
+  color: #A0A0A0;
+  text-align: center;
+  padding: 20px;
+  background-color: #2C2C2C; /* Match card background */
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 600px;
+} 

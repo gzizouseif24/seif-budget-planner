@@ -1,0 +1,153 @@
+/* Styles for TransactionList.jsx */
+.transaction-list-container {
+  background-color: var(--container-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.transaction-list-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-color-primary);
+}
+
+.transaction-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+  background-color: #1F1F1F; /* Slightly different bg for filter bar */
+  padding: 1rem;
+  border-radius: calc(var(--border-radius) * 0.75);
+}
+
+.transaction-filters > div {
+  display: flex;
+  flex-direction: column; /* Stack label and select */
+}
+
+.transaction-filters label {
+  margin-right: 0; /* Remove right margin as it's stacked now */
+  margin-bottom: 0.35rem; /* Space between label and select */
+  font-size: 0.9em;
+}
+
+.transaction-filters select {
+  min-width: 180px; /* Give selects a decent minimum width */
+}
+
+.transaction-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transaction-item {
+  background-color: #1F1F1F; /* Dark background for each item */
+  border-radius: calc(var(--border-radius) * 0.75);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-left: 5px solid transparent; /* Placeholder for type indicator */
+  transition: background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+}
+
+.transaction-item:last-child {
+  margin-bottom: 0;
+}
+
+.transaction-item.income {
+  border-left-color: var(--accent-color-green);
+}
+
+.transaction-item.expense {
+  border-left-color: var(--accent-color-red);
+}
+
+.transaction-primary-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.category-emoji {
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.date {
+  color: var(--text-color-secondary);
+  font-size: 0.9em;
+}
+
+.transaction-amount-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.transaction-amount-type {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.note {
+  font-size: 0.95em;
+  color: var(--text-color-secondary);
+  font-style: italic;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+  flex-grow: 1;
+  min-width: 100px;
+}
+
+.transaction-amount-type .amount {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+}
+
+.transaction-amount-type .amount.income {
+  color: var(--accent-color-green);
+}
+
+.transaction-amount-type .amount.expense {
+  color: var(--accent-color-red);
+}
+
+.transaction-amount-type .type {
+  font-size: 0.85em;
+  color: var(--text-color-secondary);
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.no-transactions-message {
+  text-align: center;
+  color: var(--text-color-secondary);
+  padding: 1rem 0;
+  background-color: #1F1F1F;
+  border-radius: calc(var(--border-radius) * 0.75);
+} 

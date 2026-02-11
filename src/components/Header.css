@@ -1,0 +1,19 @@
+/* Styles for Header.jsx */
+.app-header {
+  background-color: var(--container-background); /* Or a slightly different shade for distinction */
+  color: var(--text-color-primary);
+  padding: 1rem 0; /* Adjust padding as needed */
+  text-align: center;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */ /* Optional shadow */
+  width: 100%; /* Ensure it spans full width */
+  /* If using #root padding, you might need to adjust width or use negative margins 
+     to make it visually span the entire top, or remove padding from #root if header 
+     and nav are outside the main scrollable content area with padding. 
+     For now, this will be inside #root's padding. */
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.8rem; /* Adjust size as needed */
+  font-weight: 700; /* Satoshi Bold */
+} 

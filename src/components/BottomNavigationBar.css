@@ -1,0 +1,64 @@
+/* Styles for BottomNavigationBar.jsx */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #333; /* Placeholder background */
+  color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+  z-index: 1000; /* Ensure it stays on top */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-in, 
+              visibility 0.3s ease-in, 
+              transform 0.3s ease-in;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ccc; /* Placeholder link color */
+  text-decoration: none;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  transition: color 0.3s ease;
+}
+
+/* --- NEW styles for actual icons and labels --- */
+.nav-icon {
+  font-size: 1.6em; /* Adjust size as needed */
+  margin-bottom: 2px; /* Space between icon and label */
+}
+
+.nav-label {
+  font-size: 0.75em; /* Adjust label size */
+  display: block; /* Ensure label takes its own space */
+}
+
+.nav-item.active {
+  /* Use variables for accent color */
+  color: var(--accent-color-green); /* Or your primary accent color */
+  font-weight: normal; /* Remove default bold maybe */
+}
+
+.nav-item:hover {
+  color: white;
+}
+
+.bottom-nav--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(100%); /* Optional: slide it down */
+  transition: opacity 0.3s ease-out, 
+              visibility 0.3s ease-out, 
+              transform 0.3s ease-out;
+} 

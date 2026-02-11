@@ -1,0 +1,42 @@
+/* Styles for DashboardPage.jsx */
+
+.dashboard-page-container {
+  padding: 0 1rem; /* Add some horizontal padding if not already there from #root or main-content-area */
+}
+
+.dashboard-title {
+  font-size: 1.8rem; /* Reduced title size significantly */
+  font-weight: 600; /* Slightly less bold */
+  color: var(--text-color-primary);
+  text-align: center; /* Design title is centered */
+  margin-top: 0.5rem; /* Reduced top margin */
+  margin-bottom: 1rem; /* Reduced bottom margin */
+}
+
+.add-transaction-button-container {
+  margin: 1rem 0; /* Reduced spacing */
+  text-align: center;
+}
+
+.add-transaction-button-container .btn-primary {
+  /* Ensuring it uses the green color from variables */
+  background-color: var(--accent-color-green);
+  border-color: var(--accent-color-green);
+  color: #FFFFFF; /* White text */
+  padding: 0.6rem 1.2rem; /* Reduced button padding */
+  font-size: 0.9rem; /* Reduced button font size */
+  /* border-radius: var(--border-radius); // Already set by .btn */
+}
+
+.add-transaction-button-container .btn-primary:hover {
+  background-color: #25a25a; /* Darker shade of green on hover */
+  border-color: #25a25a;
+}
+
+/* Separator lines if needed, but design seems to use card separation */
+.dashboard-separator {
+  border: none;
+  height: 1px;
+  background-color: #3a3a3a; /* Subtle separator color */
+  margin: 2rem 0;
+} 
